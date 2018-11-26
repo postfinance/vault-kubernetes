@@ -325,7 +325,7 @@ $ mage buildAllImages
 cd demo
 ./deploy.sh profile
 ...
-./delete.sh
+./delete.sh namespace
 ```
 
 
