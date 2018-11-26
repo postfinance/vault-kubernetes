@@ -1,0 +1,5 @@
+go.sum
+dist/
+local/
+public/
+vendor/

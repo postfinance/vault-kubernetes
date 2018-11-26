@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-dev-server
+  labels:
+    appl: vault-dev-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appl: vault-dev-server
+  template:
+    metadata:
+      labels:
+        appl: vault-dev-server
+    spec:
+      volumes:
+      - name: kubernetes-ca-cert
+        secret:
+          secretName: kubernetes-ca-cert
+          items:
+          - key: truststore.pem
+            path: truststore.pem
+      - name: pem-keys
+        secret:
+          secretName: pem-keys
+          items:
+          - key: truststore.pem
+            path: truststore.pem
+      - name: bootstrap-scripts
+        configMap:
+          name: bootstrap-scripts
+      containers:
+      - name: dev-vault
+        image: vault
+        ports:
+        - name: "http"
+          containerPort: 8200
+          protocol: TCP
+        env:
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: 90b03685-e17b-7e5e-13a0-e14e45baeb2f
+        - name: VAULT_DEV_LISTEN_ADDRESS
+          value: 0.0.0.0:8200
+        volumeMounts:
+        - name: kubernetes-ca-cert
+          mountPath: "/var/tmp/kubernetes-ca-cert"
+          readOnly: true
+        - name: pem-keys
+          mountPath: "/var/tmp/pem-keys"
+          readOnly: true
+        - name: bootstrap-scripts
+          mountPath: "/var/tmp/bootstrap-scripts"
+          readOnly: true
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "/bin/sh"
+                - "/var/tmp/bootstrap-scripts/bootstrap-dev-vault"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: vault-dev-server
+spec:
+  selector:
+    appl: vault-dev-server
+  ports:
+  - name: "http"
+    protocol: TCP
+    port: 8200
+    targetPort: 8200
+

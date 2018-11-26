@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-kubernetes-token-renewer
+  labels:
+    appl: vault-kubernetes-token-renewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appl: vault-kubernetes-token-renewer
+  template:
+    metadata:
+      labels:
+        appl: vault-kubernetes-token-renewer
+    spec:
+      shareProcessNamespace: true
+      serviceAccountName: ${SERVICEACCOUNT}
+      volumes:
+      - name: vault-token
+        emptyDir:
+          medium: Memory
+      initContainers:
+      - name: vault-kubernetes-authenticator
+        image: ${AUTHENTICATOR_IMAGE}
+        volumeMounts:
+        - name: vault-token
+          mountPath: ${VAULT_TOKEN_DIR}
+        env:
+        - name: VAULT_ADDR
+          value: ${VAULT_ADDR}
+        - name: VAULT_SKIP_VERIFY
+          value: "true"
+        - name: VAULT_K8S_MOUNT_PATH
+          value: ${VAULT_K8S_MOUNT_PATH}
+        - name: VAULT_ROLE
+          value: ${VAULT_ROLE}
+        - name: VAULT_TOKEN_PATH
+          value: ${VAULT_TOKEN_PATH}
+      containers:
+      - name: vault-kubernetes-token-renewer
+        image: ${TOKEN_RENEWER_IMAGE}
+        volumeMounts:
+        - name: vault-token
+          mountPath: ${VAULT_TOKEN_DIR}
+        env:
+        - name: VAULT_ADDR
+          value: ${VAULT_ADDR}
+        - name: VAULT_SKIP_VERIFY
+          value: "true"
+        - name: VAULT_K8S_MOUNT_PATH
+          value: ${VAULT_K8S_MOUNT_PATH}
+        - name: VAULT_TOKEN_PATH
+          value: ${VAULT_TOKEN_PATH}
+      - name: kuard
+        image: ${IMAGE}
+        volumeMounts:
+        - name: vault-token
+          mountPath: ${VAULT_TOKEN_DIR}
+

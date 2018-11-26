@@ -1,0 +1,25 @@
+export VAULT_ADDR="http://127.0.0.1:8200"
+export VAULT_TOKEN="90b03685-e17b-7e5e-13a0-e14e45baeb2f"
+
+while ! pgrep vault; do
+  sleep 5
+done
+
+# test data for cluster=${CLUSTER} and namespace=${NAMESPACE}
+vault kv put secret/${CLUSTER}/${NAMESPACE}/first one=1234567890 two=2345678901
+vault kv put secret/${CLUSTER}/${NAMESPACE}/second green=lantern poison=ivy
+
+# enable kubernetes auth on path auth/${CLUSTER}
+vault auth enable --path="${CLUSTER}" kubernetes
+vault write auth/${CLUSTER}/config \
+  kubernetes_host=${APISERVER} \
+  kubernetes_ca_cert="$(cat /var/tmp/kubernetes-ca-cert/truststore.pem)"
+  pem_keys="$(cat /var/tmp/pem-keys/truststore.pem)"
+
+# create and authorize role=${VAULT_ROLE} on data for cluster=${CLUSTER} and namespace=${NAMESPACE}
+echo 'path "secret/data/${CLUSTER}/${NAMESPACE}/*" { capabilities = ["list", "read"] }' | vault policy write ${VAULT_ROLE} -
+vault write auth/${CLUSTER}/role/${VAULT_ROLE} \
+  bound_service_account_names=${SERVICEACCOUNT} \
+  bound_service_account_namespaces=${NAMESPACE} \
+  policies=${VAULT_ROLE} \
+  ttl=1h
