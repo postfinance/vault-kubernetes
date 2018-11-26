@@ -27,6 +27,7 @@ func init() {
 	}
 	os.Setenv("GO111MODULE", "on")
 	os.Setenv("CGO_ENABLED", "0") // only stativ builds
+	os.Setenv("GOOS", "linux")
 }
 
 // Vendor go packages (does wipe first)
@@ -120,6 +121,7 @@ func BuildRenew() error {
 
 // BuildAuthImage build vault-kubernetes-authenticator docker image
 func BuildAuthImage() error {
+	mg.Deps(BuildAuth)
 	g, err := git.New(".", git.WithSemverTemplate())
 	if err != nil {
 		mg.Fatal(1, err)
@@ -142,6 +144,7 @@ func BuildAuthImage() error {
 
 // BuildSyncImage build vault-kubernetes-synchronizer docker image
 func BuildSyncImage() error {
+	mg.Deps(BuildSync)
 	g, err := git.New(".", git.WithSemverTemplate())
 	if err != nil {
 		mg.Fatal(1, err)
@@ -164,6 +167,7 @@ func BuildSyncImage() error {
 
 // BuildRenewImage build vault-kubernetes-renew docker image
 func BuildRenewImage() error {
+	mg.Deps(BuildRenew)
 	g, err := git.New(".", git.WithSemverTemplate())
 	if err != nil {
 		mg.Fatal(1, err)

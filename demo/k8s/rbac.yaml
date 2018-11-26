@@ -6,6 +6,17 @@ metadata:
   namespace: ${NAMESPACE}
 
 ---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: secret-admin
+  namespace: ${NAMESPACE}
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["*"]
+
+---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -16,7 +27,7 @@ subjects:
   name: ${SERVICEACCOUNT}
   namespace: ${NAMESPACE}
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: secret-admin
   apiGroup: rbac.authorization.k8s.io
 

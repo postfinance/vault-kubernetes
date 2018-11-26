@@ -23,6 +23,7 @@ spec:
       initContainers:
       - name: vault-kubernetes-authenticator
         image: ${AUTHENTICATOR_IMAGE}
+        imagePullPolicy: Always
         volumeMounts:
         - name: vault-token
           mountPath: ${VAULT_TOKEN_DIR}

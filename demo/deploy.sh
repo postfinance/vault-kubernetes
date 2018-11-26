@@ -14,27 +14,29 @@ fi
 
 source $1
 
+cd $(dirname $0)
+
 kubectl config use-context ${CLUSTER}
 
 # setup rbac
-envsubst < ../demo/k8s/rbac.yaml | kubectl sudo --namespace=${NAMESPACE} apply -f -
+envsubst < k8s/rbac.yaml | kubectl --namespace=${NAMESPACE} apply -f -
 
 # setup vault
-bash ../demo/vault/setup-secrets.sh
-bash ../demo/vault/setup-configmap.sh
-envsubst < ../demo/vault/deployment.yaml | kubectl --namespace=${NAMESPACE} apply -f -
+bash vault/setup-secrets.sh
+bash vault/setup-configmap.sh
+envsubst < vault/deployment.yaml | kubectl --namespace=${NAMESPACE} apply -f -
 
 # wait for vault
-while ! $(kubectl get pods --field-selector=status.phase=Running 2> /dev/null | grep -q '^vault-dev-server'); do
+while ! $(kubectl --namespace=${NAMESPACE} get pods --field-selector=status.phase=Running 2> /dev/null | grep -q '^vault-dev-server'); do
     echo "> vault-dev-server not yet running - waiting"
     sleep 5
 done
 
 # setup demo deployments
 {
-    envsubst < ../demo/k8s/authenticator/deployment.yaml
-    envsubst < ../demo/k8s/synchronizer/deployment.yaml
-    envsubst < ../demo/k8s/token-renewer/deployment.yaml
+    envsubst < k8s/authenticator/deployment.yaml
+    envsubst < k8s/synchronizer/deployment.yaml
+    envsubst < k8s/token-renewer/deployment.yaml
 } | kubectl --namespace=${NAMESPACE} apply -f -
 
 
