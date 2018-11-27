@@ -12,7 +12,7 @@
 - [Init Container _vault-kubernetes-authenticator_](#init-container-_vault-kubernetes-authenticator_)
     - [Configuration](#configuration)
     - [Example](#example)
-- [Init Container _vault-kubernetes-synchonizer_](#init-container-_vault-kubernetes-synchonizer_)
+- [Init Container _vault-kubernetes-synchronizer_](#init-container-_vault-kubernetes-synchronizer_)
     - [Secret Mapping](#secret-mapping)
     - [Configuration](#configuration-1)
     - [Error handling](#error-handling)
@@ -44,7 +44,7 @@ The Vault token will expire after the given TTL.
 
 Start the Init Container _vault-kubernetes-authenticator_ to authenticate to Vault and get a Vault token.
 
-After successful completion, start the Init Container _vault-kubernetes-synchonizer_ to synchronize secrets to Kubernetes.
+After successful completion, start the Init Container _vault-kubernetes-synchronizer_ to synchronize secrets to Kubernetes.
 
 The Vault token will expire after the given TTL.
 
@@ -119,13 +119,13 @@ $ k exec -ti vault-kubernetes-authenticator-5675d58d95-4wd8v sh
 ```
 
 
-# Init Container _vault-kubernetes-synchonizer_
+# Init Container _vault-kubernetes-synchronizer_
 
 Depends on Init Container _vault-kubernetes-authenticator_
 
-- each Kubernetes secrets created by _vault-kubernetes-synchonizer_ get the annotation `vault-secret: <vault secret path>`
+- each Kubernetes secrets created by _vault-kubernetes-synchronizer_ get the annotation `vault-secret: <vault secret path>`
 
-- obsolete secrets created by _vault-kubernetes-synchonizer_ will be deleted
+- obsolete secrets created by _vault-kubernetes-synchronizer_ will be deleted
 
 ## Secret Mapping
 
@@ -154,8 +154,8 @@ Depends on Init Container _vault-kubernetes-authenticator_
 ## Error handling
 
 If Vault authentication fails in _vault-kubernetes-authenticator_ and ALLOW_FAIL="true" has been set for _vault-kubernetes-authenticator_ the failed authentication will be handeled as follows:
-- all secrets in VAULT_SECRETS are available in the namespace (the content of the secrets will not be considered)- _vault-kubernetes-synchonizer_ issues a warning and terminates successfullly.
-- any secret from VAULT_SECRETS is missing in the namespace _vault-secret-synchonizer_ fails.
+- all secrets in VAULT_SECRETS are available in the namespace (the content of the secrets will not be considered)- _vault-kubernetes-synchronizer_ issues a warning and terminates successfullly.
+- any secret from VAULT_SECRETS is missing in the namespace _vault-secret-synchronizer_ fails.
 
 ## Example
 
