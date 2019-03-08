@@ -1,9 +1,23 @@
-FROM alpine:3.8
+FROM golang:1.12-alpine as builder
+RUN apk --no-cache add git
 
-LABEL authors="marc.sauter@postfinance.ch"
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
 
-ARG BINARY
-ADD $BINARY /token-renewer
+WORKDIR /vgo/
+COPY . .
 
-ENTRYPOINT ["/token-renewer"]
+RUN ls -al
+RUN go build -o /token-renewer ./cmd/token-renewer/main.go
+
+# Build runtime
+FROM alpine:3.8 as runtime
+MAINTAINER OpenSource PF <opensource@postfinance.ch>
+
+COPY --from=builder /token-renewer /token-renewer
+
+# Run as nobody:x:65534:65534:nobody:/:/sbin/nologin
+USER 65534
+
+CMD ["/token-renewer"]
 
