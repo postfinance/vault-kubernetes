@@ -8,6 +8,9 @@ done
 # test data for cluster=${CLUSTER} and namespace=${NAMESPACE}
 vault kv put secret/${CLUSTER}/${NAMESPACE}/first one=1234567890 two=2345678901
 vault kv put secret/${CLUSTER}/${NAMESPACE}/second green=lantern poison=ivy
+vault kv put secret/${CLUSTER}/${NAMESPACE}/greek/alpha philosopher=plato
+vault kv put secret/${CLUSTER}/${NAMESPACE}/greek/beta  god=zeus
+vault kv put secret/${CLUSTER}/${NAMESPACE}/greek/gamma mountain=olympus
 
 # enable kubernetes auth on path auth/${CLUSTER}
 vault auth enable --path="${CLUSTER}" kubernetes

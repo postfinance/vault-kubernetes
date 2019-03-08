@@ -53,8 +53,10 @@ spec:
           value: "true"
         - name: VAULT_TOKEN_PATH
           value: ${VAULT_TOKEN_PATH}
+        - name: SECRET_PREFIX
+          value: "v3t_"
         - name: VAULT_SECRETS
-          value: secret/data/${CLUSTER}/${NAMESPACE}/first,secret/data/${CLUSTER}/${NAMESPACE}/second,secret/data/${CLUSTER}/${NAMESPACE}/first:third
+          value: secret/data/${CLUSTER}/${NAMESPACE}/first,secret/data/${CLUSTER}/${NAMESPACE}/second,secret/data/${CLUSTER}/${NAMESPACE}/first:third,secret/data/${CLUSTER}/${NAMESPACE}/greek/
       containers:
       - name: kuard
         image: ${IMAGE}

@@ -10,7 +10,7 @@ export TOKEN_RENEWER_IMAGE="vault-kubernetes-token-renewer:x.y.z"
 export IMAGE="gcr.io/kuar-demo/kuard-amd64:1"
 
 export VAULT_ADDR="http://vault-dev-server.vault-dev.svc.cluster.local:8200"
-export VAULT_K8S_MOUNT_PATH="auth/${CLUSTER}/login"
+export VAULT_K8S_MOUNT_PATH="auth/${CLUSTER}"
 export VAULT_ROLE="${CLUSTER}-${NAMESPACE}-auth"
 export VAULT_TOKEN_DIR="/home/vault"
 export VAULT_TOKEN_PATH="${VAULT_TOKEN_DIR}/.vault-token"

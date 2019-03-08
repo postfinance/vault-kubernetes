@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 
@@ -54,8 +55,9 @@ func NewConfigFromEnvironment() (*Config, error) {
 	}
 	c.VaultK8SMountPath = os.Getenv("VAULT_K8S_MOUNT_PATH")
 	if c.VaultK8SMountPath == "" {
-		c.VaultK8SMountPath = "auth/kubernetes/login"
+		c.VaultK8SMountPath = "auth/kubernetes"
 	}
+	c.VaultK8SMountPath = strings.Trim(c.VaultK8SMountPath, "/")
 	c.ServiceAccountPath = os.Getenv("SERVICE_ACCOUNT_PATH")
 	if c.ServiceAccountPath == "" {
 		c.ServiceAccountPath = "/var/run/secrets/kubernetes.io/serviceaccount/token"
@@ -94,7 +96,7 @@ func (c *Config) Authenticate() (string, error) {
 	data := make(map[string]interface{})
 	data["role"] = c.VaultRole
 	data["jwt"] = jwt
-	s, err := c.vault.Logical().Write(c.VaultK8SMountPath, data)
+	s, err := c.vault.Logical().Write(path.Join(c.VaultK8SMountPath, "login"), data)
 	if err != nil {
 		return empty, errors.Wrapf(err, "login failed with role from environment variable VAULT_ROLE: %q", c.VaultRole)
 	}

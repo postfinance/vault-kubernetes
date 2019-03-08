@@ -1,3 +1,8 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/postfinance/vault-kubernetes)](https://goreportcard.com/report/github.com/postfinance/vault-kubernetes)
+[![GoDoc](https://godoc.org/github.com/postfinance/vault-kubernetes?status.svg)](https://godoc.org/github.com/postfinance/vault-kubernetes)
+[![Build Status](https://travis-ci.org/postfinance/vault-kubernetes.svg?branch=master)](https://travis-ci.org/postfinance/vault-kubernetes)
+[![Coverage Status](https://coveralls.io/repos/github/postfinance/vault-kubernetes/badge.svg?branch=master)](https://coveralls.io/github/postfinance/vault-kubernetes?branch=master)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -98,7 +103,7 @@ The usual environment variables for Vault will be used:
 
 - VAULT_TOKEN_PATH - the destination path on disk to store the token. Usually this is a shared volume.
 
-- VAULT_K8S_MOUNT_PATH - the name of the mount where the Kubernetes auth method is enabled. This defaults to auth/kubernetes/login, but if you changed the mount path you will need to set this value to that path (vault auth enable -path=k8s kubernetes -> VAULT_K8S_MOUNT_PATH=auth/k8s/login)
+- VAULT_K8S_MOUNT_PATH - the name of the mount where the Kubernetes auth method is enabled. This defaults to auth/kubernetes, but if you changed the mount path you will need to set this value to that path (vault auth enable -path=k8s kubernetes -> VAULT_K8S_MOUNT_PATH=auth/k8s)
 
 - SERVICE_ACCOUNT_PATH - the path on disk where the Kubernetes service account jtw token lives. This defaults to /var/run/secrets/kubernetes.io/serviceaccount/token.
 
@@ -136,7 +141,6 @@ Depends on Init Container _vault-kubernetes-authenticator_
 | secret/data/k8s/first       | secret/data/k8s/first | first       | Vault KV version 2 |
 | secret/data/k8s/first:third | secret/data/k8s/first | third       | Vault KV version 2 |
 
-
 > you have to provide the correct secret path in Vault
 > for KV version 1 the path starts with secret/
 > for KV version 2 the path starts with secret/data
@@ -148,6 +152,8 @@ Depends on Init Container _vault-kubernetes-authenticator_
 - VAULT_TOKEN_PATH - the destination path on disk to store the token. Usually this is a shared volume.
 
 - VAULT_SECRETS - comma separated list of secrets (see Secret Mapping)
+
+- SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t_" Vault secret "first" will get secret "v3t_first" in k8s)
 
 > set ALLOW_FAIL="true" for _vault-kubernetes-authenticator_
 
