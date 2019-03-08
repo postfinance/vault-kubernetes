@@ -1,7 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/postfinance/vault-kubernetes)](https://goreportcard.com/report/github.com/postfinance/vault-kubernetes)
-[![GoDoc](https://godoc.org/github.com/postfinance/vault-kubernetes?status.svg)](https://godoc.org/github.com/postfinance/vault-kubernetes)
 [![Build Status](https://travis-ci.org/postfinance/vault-kubernetes.svg?branch=master)](https://travis-ci.org/postfinance/vault-kubernetes)
-[![Coverage Status](https://coveralls.io/repos/github/postfinance/vault-kubernetes/badge.svg?branch=master)](https://coveralls.io/github/postfinance/vault-kubernetes?branch=master)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

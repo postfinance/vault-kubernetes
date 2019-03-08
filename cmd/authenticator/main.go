@@ -9,8 +9,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/postfinance/vault-kubernetes/pkg/auth"
 	"github.com/pkg/errors"
+	"github.com/postfinance/vault-kubernetes/pkg/auth"
 )
 
 func main() {

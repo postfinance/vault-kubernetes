@@ -18,7 +18,7 @@ stages:
 - build
 
 before_script:
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 - TAG=$(git describe --tags --abbrev=0)
 - COUNT=$(git rev-list --count ${TAG}...HEAD)
 - test ${COUNT} -eq 0 && export DOCKER_TAG=$(echo ${TAG} | sed 's/^v//')
