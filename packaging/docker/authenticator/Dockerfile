@@ -1,9 +1,23 @@
-FROM alpine:3.8
+FROM golang:1.12-alpine as builder
+RUN apk --no-cache add git
 
-LABEL authors="marc.sauter@postfinance.ch"
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
 
-ARG BINARY
-COPY $BINARY /authenticator
+WORKDIR /vgo/
+COPY . .
 
-ENTRYPOINT ["/authenticator"]
+RUN ls -al
+RUN go build -o /authenticator ./cmd/authenticator/main.go
+
+# Build runtime
+FROM alpine:3.8 as runtime
+MAINTAINER OpenSource PF <opensource@postfinance.ch>
+
+COPY --from=builder /authenticator /authenticator
+
+# Run as nobody:x:65534:65534:nobody:/:/sbin/nologin
+USER 65534
+
+CMD ["/authenticator"]
 
