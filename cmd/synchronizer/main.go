@@ -192,7 +192,7 @@ func (c *config) synchronize() error {
 			continue
 		}
 		// only if vault secret is not in secrets
-		if _, ok := c.Secrets[s.Name]; ok {
+		if _, ok := c.Secrets[strings.TrimPrefix(s.Name, c.SecretPrefix)]; ok {
 			continue
 		}
 		log.Println("delete secret", s.Name)
