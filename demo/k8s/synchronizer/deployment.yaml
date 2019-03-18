@@ -32,8 +32,8 @@ spec:
           value: ${VAULT_ADDR}
         - name: VAULT_SKIP_VERIFY
           value: "true"
-        - name: VAULT_K8S_MOUNT_PATH
-          value: ${VAULT_K8S_MOUNT_PATH}
+        - name: VAULT_AUTH_MOUNT_PATH
+          value: ${VAULT_AUTH_MOUNT_PATH}
         - name: VAULT_ROLE
           value: ${VAULT_ROLE}
         - name: VAULT_TOKEN_PATH

@@ -13,28 +13,33 @@ import (
 	"syscall"
 
 	"github.com/pkg/errors"
-	"github.com/postfinance/vault-kubernetes/pkg/auth"
+	"github.com/postfinance/vault/k8s"
 )
 
 func main() {
-	c, err := auth.NewConfigFromEnvironment()
+	c, err := k8s.NewFromEnvironment()
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "failed to get config"))
+		log.Fatal(err)
 	}
 
 	// get token and re-authenticate if enabled
 	token, err := c.GetToken()
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "failed to get token"))
+		log.Fatal(err)
+	}
+	// store token in case re-authentication was done
+	if err := c.StoreToken(token); err != nil {
+		log.Fatal(err)
 	}
 
 	renewer, err := c.NewRenewer(token)
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "failed to get token renewer"))
+		log.Fatal(err)
 	}
 
 	log.Println("start renewer loop")
 	go renewer.Renew()
+
 	exit := make(chan os.Signal, 1)
 	signal.Notify(exit, os.Interrupt, syscall.SIGTERM)
 	for {
@@ -47,9 +52,10 @@ func main() {
 		case <-renewer.RenewCh():
 			log.Println("token renewed")
 		case <-exit:
-			renewer.Stop()
 			log.Println("signal received - stop execution")
-			os.Exit(0)
+			renewer.Stop()
+			goto Exit
 		}
 	}
+Exit:
 }

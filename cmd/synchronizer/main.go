@@ -14,8 +14,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/hashicorp/vault/api"
 	"github.com/pkg/errors"
+	"github.com/postfinance/vault/k8s"
 	"github.com/postfinance/vault/kv"
 	corev1 "k8s.io/api/core/v1"
 	apierr "k8s.io/apimachinery/pkg/api/errors"
@@ -31,17 +31,22 @@ const (
 func main() {
 	c, err := newFromEnvironment()
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "failed to get config"))
+		log.Fatal(err)
 	}
 
-	if err := c.loadToken(); err != nil {
+	token, err := c.vault.LoadToken()
+	if err != nil {
 		if err := c.checkSecrets(); err != nil {
 			log.Fatal(err)
 		}
-		// you get only here if ALLOW_FAIL=true was set for vault-kubernetes-auth Init Container and vault-kubernetes-auth failed to authenticate
+		// you get only here ...
+		// IF  ALLOW_FAIL=true was set for vault-kubernetes-authenticator
+		// AND vault-kubernetes-authenticator failed to authenticate
+		// AND all testable secrets are present
 		log.Println(errors.Wrap(err, "cannot synchronize secrets - all secrets seems to be available therefore pod creation will continue"))
 		os.Exit(0)
 	}
+	c.vault.UseToken(token)
 
 	if err := c.prepare(); err != nil {
 		log.Fatal(errors.Wrap(err, "failed to prepare synchronization of secrets"))
@@ -51,25 +56,23 @@ func main() {
 		log.Fatal(errors.Wrap(err, "failed to synchronize secrets"))
 	}
 	log.Printf("secrets successfully synchronized")
-
-	os.Exit(0)
 }
 
-type config struct {
-	VaultTokenPath string
-	Secrets        map[string]string // key = kubernetes secret name, value = vault secret name
-	SecretPrefix   string            // prefix for kubernetes secret name
-	Namespace      string
-	k8sClientset   *kubernetes.Clientset
-	vaultClient    *api.Client
-	secretClients  map[string]*kv.Client
+type syncConfig struct {
+	Secrets       map[string]string // key = kubernetes secret name, value = vault secret name
+	SecretPrefix  string            // prefix for kubernetes secret name
+	Namespace     string
+	k8sClientset  *kubernetes.Clientset
+	secretClients map[string]*kv.Client
+	vault         *k8s.Vault
 }
 
-func newFromEnvironment() (*config, error) {
-	c := &config{}
-	c.VaultTokenPath = os.Getenv("VAULT_TOKEN_PATH")
-	if c.VaultTokenPath == "" {
-		return nil, fmt.Errorf("missing VAULT_TOKEN_PATH")
+func newFromEnvironment() (*syncConfig, error) {
+	var err error
+	c := &syncConfig{}
+	c.vault, err = k8s.NewFromEnvironment()
+	if err != nil {
+		return nil, err
 	}
 	c.Secrets = make(map[string]string)
 	for _, item := range strings.Split(os.Getenv("VAULT_SECRETS"), ",") {
@@ -105,38 +108,19 @@ func newFromEnvironment() (*config, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to get k8s k8sClientset")
 	}
-	// connect to vault
-	vaultConfig := api.DefaultConfig()
-	if err := vaultConfig.ReadEnvironment(); err != nil {
-		return nil, errors.Wrap(err, "failed to read environment for vault")
-	}
-	c.vaultClient, err = api.NewClient(vaultConfig)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to create vault client")
-	}
 	return c, nil
 }
 
-// loadToken from VaultTokenPath
-func (c *config) loadToken() error {
-	content, err := ioutil.ReadFile(c.VaultTokenPath)
-	if err != nil {
-		return errors.Wrap(err, "could not get vault token")
-	}
-	c.vaultClient.SetToken(string(content))
-	return nil
-}
-
 // checkSecrets check the existence of a secret and not the content
-func (c *config) checkSecrets() error {
+func (sc *syncConfig) checkSecrets() error {
 	// check secrets
-	for k, v := range c.Secrets {
+	for k, v := range sc.Secrets {
 		if strings.HasSuffix(v, "/") {
 			log.Printf("WARNING: cannot check existence of secrets from vault path %s without connection to vault\n", v)
 			continue
 		}
 		log.Println("check k8s secret", k, "from vault secret", v)
-		_, err := c.k8sClientset.CoreV1().Secrets(c.Namespace).Get(k, metav1.GetOptions{})
+		_, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(k, metav1.GetOptions{})
 		if err != nil {
 			return fmt.Errorf("secret %s does not exist", k)
 		}
@@ -145,13 +129,13 @@ func (c *config) checkSecrets() error {
 }
 
 // synchronize secret from vault to the current kubernetes namespace
-func (c *config) synchronize() error {
+func (sc *syncConfig) synchronize() error {
 	// create/update the secrets
 	annotations := make(map[string]string)
-	for k, v := range c.Secrets {
+	for k, v := range sc.Secrets {
 		// get secret from vault
 		log.Println("read", v, "from vault")
-		s, err := c.secretClients[strings.SplitN(v, "/", 2)[0]].Read(v)
+		s, err := sc.secretClients[strings.SplitN(v, "/", 2)[0]].Read(v)
 		if err != nil {
 			return err
 		}
@@ -163,25 +147,25 @@ func (c *config) synchronize() error {
 		// create/update k8s secret
 		annotations[vaultAnnotation] = v
 		secret := &corev1.Secret{}
-		secret.Name = fmt.Sprintf("%s%s", c.SecretPrefix, k)
+		secret.Name = fmt.Sprintf("%s%s", sc.SecretPrefix, k)
 		secret.Data = data
 		secret.Annotations = annotations
 		// create (insert) or update the secret
-		_, err = c.k8sClientset.CoreV1().Secrets(c.Namespace).Get(secret.Name, metav1.GetOptions{})
+		_, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(secret.Name, metav1.GetOptions{})
 		if apierr.IsNotFound(err) {
 			log.Println("create secret", secret.Name, "from vault secret", v)
-			if _, err := c.k8sClientset.CoreV1().Secrets(c.Namespace).Create(secret); err != nil {
+			if _, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Create(secret); err != nil {
 				return err
 			}
 			continue
 		}
 		log.Println("update secret", secret.Name, "from vault secret", v)
-		if _, err = c.k8sClientset.CoreV1().Secrets(c.Namespace).Update(secret); err != nil {
+		if _, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Update(secret); err != nil {
 			return err
 		}
 	}
 	// delete obsolete secrets
-	secretList, err := c.k8sClientset.CoreV1().Secrets(c.Namespace).List(metav1.ListOptions{})
+	secretList, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).List(metav1.ListOptions{})
 	if err != nil {
 		log.Println(errors.Wrap(err, "cleanup of unused vault secrets failed"))
 		os.Exit(0)
@@ -192,11 +176,11 @@ func (c *config) synchronize() error {
 			continue
 		}
 		// only if vault secret is not in secrets
-		if _, ok := c.Secrets[strings.TrimPrefix(s.Name, c.SecretPrefix)]; ok {
+		if _, ok := sc.Secrets[strings.TrimPrefix(s.Name, sc.SecretPrefix)]; ok {
 			continue
 		}
 		log.Println("delete secret", s.Name)
-		if err := c.k8sClientset.CoreV1().Secrets(c.Namespace).Delete(s.Name, &metav1.DeleteOptions{}); err != nil {
+		if err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Delete(s.Name, &metav1.DeleteOptions{}); err != nil {
 			log.Println(errors.Wrapf(err, "delete obsolete vault secret %s failed", s.Name))
 		}
 	}
@@ -204,18 +188,18 @@ func (c *config) synchronize() error {
 }
 
 // prepare
-func (c *config) prepare() error {
-	c.secretClients = make(map[string]*kv.Client)
+func (sc *syncConfig) prepare() error {
+	sc.secretClients = make(map[string]*kv.Client)
 	secrets := make(map[string]string)
-	for k, v := range c.Secrets {
+	for k, v := range sc.Secrets {
 		mount := strings.SplitN(v, "/", 2)[0]
 		// ensure kv.Client for mount
-		if _, ok := c.secretClients[mount]; !ok {
-			secretClient, err := kv.New(c.vaultClient, mount+"/")
+		if _, ok := sc.secretClients[mount]; !ok {
+			secretClient, err := kv.New(sc.vault.Client(), mount+"/")
 			if err != nil {
 				return err
 			}
-			c.secretClients[mount] = secretClient
+			sc.secretClients[mount] = secretClient
 		}
 		// v is a secret
 		if !strings.HasSuffix(v, "/") {
@@ -223,7 +207,7 @@ func (c *config) prepare() error {
 			continue
 		}
 		// v is a path -> get all secrets from v
-		keys, err := c.secretClients[mount].List(v)
+		keys, err := sc.secretClients[mount].List(v)
 		if err != nil {
 			return err
 		}
@@ -231,6 +215,6 @@ func (c *config) prepare() error {
 			secrets[k] = path.Join(v, k)
 		}
 	}
-	c.Secrets = secrets
+	sc.Secrets = secrets
 	return nil
 }

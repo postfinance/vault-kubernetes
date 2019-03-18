@@ -100,9 +100,9 @@ The usual environment variables for Vault will be used:
 
 - VAULT_TOKEN_PATH - the destination path on disk to store the token. Usually this is a shared volume.
 
-- VAULT_K8S_MOUNT_PATH - the name of the mount where the Kubernetes auth method is enabled. This defaults to auth/kubernetes, but if you changed the mount path you will need to set this value to that path (vault auth enable -path=k8s kubernetes -> VAULT_K8S_MOUNT_PATH=auth/k8s)
+- VAULT_AUTH_MOUNT_PATH - the name of the mount where the Kubernetes auth method is enabled. This defaults to kubernetes, but if you changed the mount path you will need to set this value to that path (vault auth enable -path=k8s kubernetes -> VAULT_AUTH_MOUNT_PATH=k8s)
 
-- SERVICE_ACCOUNT_PATH - the path on disk where the Kubernetes service account jtw token lives. This defaults to /var/run/secrets/kubernetes.io/serviceaccount/token.
+- SERVICE_ACCOUNT_TOKEN_PATH - the path on disk where the Kubernetes service account jtw token lives. This defaults to /var/run/secrets/kubernetes.io/serviceaccount/token.
 
 - ALLOW_FAIL - the container will successfully terminate even if the authentication to Vault failed, no token will be written to VAULT_TOKEN_PATH. **This condition needs to be handeled in the succeeding container.** (default: "false")
 
