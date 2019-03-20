@@ -49,7 +49,6 @@ require (
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/hashicorp/nomad v0.8.7 // indirect
 	github.com/hashicorp/serf v0.8.2 // indirect
-	github.com/hashicorp/vault v1.0.3
 	github.com/hashicorp/vault-plugin-auth-alicloud v0.0.0-20190311155555-98628998247d // indirect
 	github.com/hashicorp/vault-plugin-auth-azure v0.0.0-20190201222632-0af1d040b5b3 // indirect
 	github.com/hashicorp/vault-plugin-auth-centrify v0.0.0-20180816201131-66b0a34a58bf // indirect
@@ -81,8 +80,8 @@ require (
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.8.1
-	github.com/postfinance/vault/k8s v0.0.2 // indirect
-	github.com/postfinance/vault/kv v0.0.1
+	github.com/postfinance/vault/k8s v0.0.2
+	github.com/postfinance/vault/kv v0.0.3
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
 	github.com/pquerna/otp v1.1.0 // indirect
 	github.com/samuel/go-zookeeper v0.0.0-20180130194729-c4fab1ac1bec // indirect

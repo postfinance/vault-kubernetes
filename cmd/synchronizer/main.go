@@ -139,6 +139,9 @@ func (sc *syncConfig) synchronize() error {
 		if err != nil {
 			return err
 		}
+		if s == nil {
+			continue
+		}
 		// convert data
 		data := make(map[string][]byte)
 		for k, v := range s {
@@ -211,6 +214,10 @@ func (sc *syncConfig) prepare() error {
 		if err != nil {
 			return err
 		}
+		if keys == nil {
+			continue
+		}
+		// TODO: check for secret == nil
 		for _, k := range keys {
 			secrets[k] = path.Join(v, k)
 		}
