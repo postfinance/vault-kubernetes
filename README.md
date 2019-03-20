@@ -6,23 +6,23 @@
 
 - [Credits](#credits)
 - [Scenarios](#scenarios)
-    - [Scenario 1 - Get a Vault token for one time use](#scenario-1-get-a-vault-token-for-one-time-use)
-    - [Scenario 2 - Sync Vault secrets to Kubernetes secrets](#scenario-2-sync-vault-secrets-to-kubernetes-secrets)
-    - [Scenario 3 - Get a Vault token for use during the lifetime of a pod](#scenario-3-get-a-vault-token-for-use-during-the-lifetime-of-a-pod)
+  - [Scenario 1 - Get a Vault token for one time use](#scenario-1---get-a-vault-token-for-one-time-use)
+  - [Scenario 2 - Sync Vault secrets to Kubernetes secrets](#scenario-2---sync-vault-secrets-to-kubernetes-secrets)
+  - [Scenario 3 - Get a Vault token for use during the lifetime of a pod](#scenario-3---get-a-vault-token-for-use-during-the-lifetime-of-a-pod)
 - [Issues](#issues)
 - [Vault client configuration](#vault-client-configuration)
 - [Init Container _vault-kubernetes-authenticator_](#init-container-_vault-kubernetes-authenticator_)
-    - [Configuration](#configuration)
-    - [Example](#example)
+  - [Configuration](#configuration)
+  - [Example](#example)
 - [Init Container _vault-kubernetes-synchronizer_](#init-container-_vault-kubernetes-synchronizer_)
-    - [Secret Mapping](#secret-mapping)
-    - [Configuration](#configuration-1)
-    - [Error handling](#error-handling)
-    - [Example](#example-1)
-    - [Example - with failed authentication](#example-with-failed-authentication)
+  - [Secret Mapping](#secret-mapping)
+  - [Configuration](#configuration-1)
+  - [Error handling](#error-handling)
+  - [Example](#example-1)
+  - [Example - with failed authentication](#example---with-failed-authentication)
 - [Sidecar _vault-kubernetes-token-renewer_](#sidecar-_vault-kubernetes-token-renewer_)
-    - [Configuration](#configuration-2)
-    - [Example](#example-2)
+  - [Configuration](#configuration-2)
+  - [Example](#example-2)
 - [Build](#build)
 - [Demo](#demo)
 - [Links](#links)
@@ -131,16 +131,13 @@ Depends on Init Container _vault-kubernetes-authenticator_
 
 ## Secret Mapping
 
-| Mapping                     | Vault                 | Kubernetes  | Remark             |
-|-----------------------------|:----------------------|:------------|:-------------------|
-| secret/k8s/first            | secret/k8s/first      | first       | Vault KV version 1 |
-| secret/k8s/first:third      | secret/k8s/first      | third       | Vault KV version 1 |
-| secret/data/k8s/first       | secret/data/k8s/first | first       | Vault KV version 2 |
-| secret/data/k8s/first:third | secret/data/k8s/first | third       | Vault KV version 2 |
-
-> you have to provide the correct secret path in Vault
-> for KV version 1 the path starts with secret/
-> for KV version 2 the path starts with secret/data
+| Mapping                     | Vault                 | Kubernetes  |
+|-----------------------------|:----------------------|:------------|
+| secret/k8s/first            | secret/k8s/first      | first       |
+| secret/k8s/first:third      | secret/k8s/first      | third       |
+|-----------------------------|-----------------------|-------------|
+| secret/k8s/                 | secret/k8s/first      | first       |
+|                             | secret/k8s/second     | second      |
 
 > labels/names in Kubernetes will be validated according to [RFC-1123](https://tools.ietf.org/html/rfc1123)
 
