@@ -155,13 +155,17 @@ func (sc *syncConfig) synchronize() error {
 		secret.Annotations = annotations
 		// create (insert) or update the secret
 		_, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(secret.Name, metav1.GetOptions{})
-		if apierr.IsNotFound(err) {
-			log.Println("create secret", secret.Name, "from vault secret", v)
-			if _, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Create(secret); err != nil {
-				return err
+		if err != nil {
+			if apierr.IsNotFound(err) {
+				log.Println("create secret", secret.Name, "from vault secret", v)
+				if _, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Create(secret); err != nil {
+					return err
+				}
+				continue
 			}
-			continue
+			return err
 		}
+
 		log.Println("update secret", secret.Name, "from vault secret", v)
 		if _, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Update(secret); err != nil {
 			return err
