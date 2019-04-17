@@ -7,7 +7,6 @@ ENV CGO_ENABLED=0
 WORKDIR /vgo/
 COPY . .
 
-RUN ls -al
 RUN go build -o /synchronizer ./cmd/synchronizer/main.go
 
 # Build runtime
