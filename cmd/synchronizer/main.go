@@ -154,7 +154,7 @@ func (sc *syncConfig) synchronize() error {
 		secret.Data = data
 		secret.Annotations = annotations
 		// create (insert) or update the secret
-		_, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(secret.Name, metav1.GetOptions{})
+		existing, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(secret.Name, metav1.GetOptions{})
 		if err != nil {
 			if apierr.IsNotFound(err) {
 				log.Println("create secret", secret.Name, "from vault secret", v)
@@ -164,6 +164,11 @@ func (sc *syncConfig) synchronize() error {
 				continue
 			}
 			return err
+		}
+
+		if _, ok := existing.Annotations[vaultAnnotation]; !ok {
+			log.Println("WARNING: ignoring secret", secret.Name, "- not managed by synchronizer")
+			continue
 		}
 
 		log.Println("update secret", secret.Name, "from vault secret", v)
