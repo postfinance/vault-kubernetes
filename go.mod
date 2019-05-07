@@ -33,6 +33,7 @@ require (
 	github.com/gocql/gocql v0.0.0-20190301043612-f6df8288f9b4 // indirect
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
 	github.com/google/gofuzz v0.0.0-20170612174753-24818f796faf // indirect
+	github.com/google/pprof v0.0.0-20190502144155-8358a9778bd1 // indirect
 	github.com/googleapis/gax-go v2.0.2+incompatible // indirect
 	github.com/googleapis/gnostic v0.2.0 // indirect
 	github.com/gorhill/cronexpr v0.0.0-20180427100037-88b0669f7d75 // indirect
@@ -61,6 +62,7 @@ require (
 	github.com/hashicorp/vault-plugin-secrets-gcp v0.0.0-20190311200649-621231cb86fe // indirect
 	github.com/hashicorp/vault-plugin-secrets-gcpkms v0.0.0-20190116164938-d6b25b0b4a39 // indirect
 	github.com/hashicorp/vault-plugin-secrets-kv v0.0.0-20190227052836-76a82948fe5b // indirect
+	github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6 // indirect
 	github.com/influxdata/influxdb v1.7.4 // indirect
 	github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589 // indirect
 	github.com/jeffchao/backoff v0.0.0-20140404060208-9d7fd7aa17f2 // indirect
@@ -68,6 +70,7 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/keybase/go-crypto v0.0.0-20190312101036-b475f2ecc1fe // indirect
+	github.com/magefile/mage v1.8.0
 	github.com/mattbaird/elastigo v0.0.0-20170123220020-2fe47fd29e4b // indirect
 	github.com/michaelklishin/rabbit-hole v1.5.0 // indirect
 	github.com/mitchellh/hashstructure v1.0.0 // indirect
@@ -80,6 +83,7 @@ require (
 	github.com/pborman/uuid v1.2.0 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.8.1
+	github.com/postfinance/mage/git v0.0.4
 	github.com/postfinance/vault/k8s v0.0.2
 	github.com/postfinance/vault/kv v0.0.3
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
@@ -90,6 +94,7 @@ require (
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
 	github.com/ugorji/go/codec v0.0.0-20190309163734-c4a1c341dc93 // indirect
 	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
+	golang.org/x/arch v0.0.0-20190312162104-788fe5ffcd8c // indirect
 	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6 // indirect
 	google.golang.org/api v0.1.0 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
