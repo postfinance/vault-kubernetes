@@ -17,7 +17,7 @@ import (
 
 // Default target to run when none is specified
 // If not set, running mage will list available targets
-var Default = Lint
+var Default = BuildAllImages
 
 func init() {
 	v, err := strconv.ParseFloat(strings.TrimLeft(runtime.Version(), "go"), 3)
@@ -30,52 +30,13 @@ func init() {
 	os.Setenv("GOOS", "linux")
 }
 
-// Vendor go packages (does wipe first)
-func Vendor() error {
-	mg.Deps(Clean)
-	return sh.Run(mg.GoCmd(), "mod", "vendor")
-}
-
-// Clean the workspace (public, vendor)
-func Clean() error {
-	for _, d := range []string{"dist", "public", "vendor"} {
-		if err := sh.Rm(d); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // TOC for README.md
 func TOC() error {
 	return sh.Run("doctoc", "--gitlab", "README.md")
 }
 
-// Lint run linter
-func Lint() error {
-	return sh.Run(mg.GoCmd(), "vet", "./cmd/...")
-}
-
 func getldflags() string {
 	return ""
-}
-
-// BuildAuth build the auth binary
-func BuildAuth() error {
-	ldflags := getldflags()
-	return sh.Run(mg.GoCmd(), "build", "-ldflags", ldflags, "-o", "dist/authenticator", "cmd/authenticator/main.go")
-}
-
-// BuildSync build the sync binary
-func BuildSync() error {
-	ldflags := getldflags()
-	return sh.Run(mg.GoCmd(), "build", "-ldflags", ldflags, "-o", "dist/synchronizer", "cmd/synchronizer/main.go")
-}
-
-// BuildRenew build the renew binary
-func BuildRenew() error {
-	ldflags := getldflags()
-	return sh.Run(mg.GoCmd(), "build", "-ldflags", ldflags, "-o", "dist/token-renewer", "cmd/token-renewer/main.go")
 }
 
 // BuildAuthImage build vault-kubernetes-authenticator docker image

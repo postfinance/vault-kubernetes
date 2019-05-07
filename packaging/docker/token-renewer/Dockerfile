@@ -5,10 +5,9 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
 WORKDIR /vgo/
-COPY ./cmd ./cmd
+COPY ./cmd/token-renewer/ .
 
-RUN ls -al
-RUN go build -o /token-renewer ./cmd/token-renewer/main.go
+RUN go build -o /token-renewer main.go
 
 # Build runtime
 FROM alpine:3.8 as runtime

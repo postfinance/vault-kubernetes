@@ -5,9 +5,9 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
 WORKDIR /vgo/
-COPY ./cmd ./cmd
+COPY ./cmd/synchronizer/ .
 
-RUN go build -o /synchronizer ./cmd/synchronizer/main.go
+RUN go build -o /synchronizer main.go
 
 # Build runtime
 FROM alpine:3.8 as runtime
