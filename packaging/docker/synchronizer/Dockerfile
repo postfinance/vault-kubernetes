@@ -5,7 +5,7 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
 WORKDIR /vgo/
-COPY . .
+COPY ./cmd ./cmd
 
 RUN go build -o /synchronizer ./cmd/synchronizer/main.go
 
