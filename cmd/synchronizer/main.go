@@ -65,6 +65,7 @@ type syncConfig struct {
 	k8sClientset  *kubernetes.Clientset
 	secretClients map[string]*kv.Client
 	vault         *k8s.Vault
+	annotation    string
 }
 
 func newFromEnvironment() (*syncConfig, error) {
@@ -74,6 +75,8 @@ func newFromEnvironment() (*syncConfig, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.annotation = getEnv("SYNCHRONIZER_ANNOTATION", vaultAnnotation)
+	log.Println("Using annotation [", c.annotation, "] to detect managed secrets")
 	c.Secrets = make(map[string]string)
 	for _, item := range strings.Split(os.Getenv("VAULT_SECRETS"), ",") {
 		if len(item) == 0 {
@@ -148,7 +151,7 @@ func (sc *syncConfig) synchronize() error {
 			data[k] = []byte(v.(string))
 		}
 		// create/update k8s secret
-		annotations[vaultAnnotation] = v
+		annotations[sc.annotation] = v
 		secret := &corev1.Secret{}
 		secret.Name = fmt.Sprintf("%s%s", sc.SecretPrefix, k)
 		secret.Data = data
@@ -166,7 +169,7 @@ func (sc *syncConfig) synchronize() error {
 			return err
 		}
 
-		if _, ok := existing.Annotations[vaultAnnotation]; !ok {
+		if _, ok := existing.Annotations[sc.annotation]; !ok {
 			log.Println("WARNING: ignoring secret", secret.Name, "- not managed by synchronizer")
 			continue
 		}
@@ -184,7 +187,7 @@ func (sc *syncConfig) synchronize() error {
 	}
 	for _, s := range secretList.Items {
 		// only secrets from vault
-		if _, ok := s.Annotations[vaultAnnotation]; !ok {
+		if _, ok := s.Annotations[sc.annotation]; !ok {
 			continue
 		}
 		// only if vault secret is not in secrets
@@ -233,4 +236,11 @@ func (sc *syncConfig) prepare() error {
 	}
 	sc.Secrets = secrets
 	return nil
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
