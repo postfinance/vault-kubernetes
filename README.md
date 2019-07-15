@@ -150,6 +150,8 @@ Depends on Init Container _vault-kubernetes-authenticator_
 
 - SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t_" Vault secret "first" will get secret "v3t_first" in k8s)
 
+- SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very usefull if you need more than one `vault-synchronizer` init container in the same namespace.
+
 > set ALLOW_FAIL="true" for _vault-kubernetes-authenticator_
 
 ## Error handling
