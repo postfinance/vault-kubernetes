@@ -122,7 +122,7 @@ func (sc *syncConfig) checkSecrets() error {
 		log.Println("check k8s secret", k, "from vault secret", v)
 		_, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(k, metav1.GetOptions{})
 		if err != nil {
-			return fmt.Errorf("secret %s does not exist", k)
+			return fmt.Errorf("could not fetch secret %s from namespace %s: %s", k, sc.Namespace, err.Error())
 		}
 	}
 	return nil
