@@ -281,6 +281,53 @@ NAME                                            READY   STATUS    RESTARTS   AGE
 vault-kubernetes-synchronizer-7d5f65895-2pf4j   1/1     Running   0          5m18s
 ```
 
+## Example - with failed synchronizer
+
+### Permission issue
+```
+$ k logs pod/vault-kubernetes-synchronizer-demo-vvzxr -c vault-kubernetes-synchronizer
+2019/08/20 14:00:28 Using annotation [ vault-secret ] to detect managed secrets
+2019/08/20 14:00:28 failed to prepare synchronization of secrets: Error making API request.
+
+URL: GET http://example.com/v1/sys/mounts
+Code: 403. Errors:
+
+* 1 error occurred:
+        * permission denied
+```
+
+The fix for this is to add read permission to the `read` permission in the `sys/mounts` for the SA.
+```
+path "sys/mounts" {
+ capabilities = ["read"]
+}
+```
+
+### KV/Vault engine Version missing
+```
+$ k logs pod/vault-kubernetes-synchronizer-sd-67fb88c95b-d7pkb -c vault-kubernetes-authenticator
+2019/09/06 08:58:55 successfully authenticated to vault
+2019/09/06 08:58:55 successfully stored vault token at /home/vault/.vault-token
+$ k logs pod/vault-kubernetes-synchronizer-sd-67fb88c95b-d7pkb -c vault-kubernetes-synchronizer
+2019/09/06 09:00:40 Using annotation [ vault-secret ] to detect managed secrets
+2019/09/06 09:00:40 failed to prepare synchronization of secrets: strconv.Atoi: parsing "": invalid syntax
+```
+
+The reason for the above error is no versioning enabled for the kv secret engine. The version(1/2) has to be enabled & leaving it blank will cause above issue. Please follow the steps mentioned to fix it.
+
+```
+$ vault secrets list -detailed
+Path                Plugin       Accessor              Default TTL    Max TTL    Force No Cache    Replication    Seal Wrap    Options    Description                                                UUID
+----                ------       --------              -----------    -------    --------------    -----------    ---------    -------    -----------                                                ----
+secret/             kv           kv_8210532d           system         system     false             replicated     false        map[]      n/a                                                        1dd5df15-8178-7843-6795-f05def3c3db8
+$ vault secrets enable -version=1 kv
+Success! Enabled the kv secrets engine at: kv/
+$ vault kv enable-versioning secret/
+Success! Tuned the secrets engine at: secret/
+$ vault secrets list -detailed | grep kv
+kv/                 kv           kv_894f5894           system         system     false             replicated     false        map[version:1]    n/a                                                        f0736f4d-343d-e32a-b2c5-897bf3552f1f
+secret/             kv           kv_8210532d           system         system     false             replicated     false        map[version:2]    n/a                                                        1dd5df15-8178-7843-6795-f05def3c3db8
+```
 
 # Sidecar _vault-kubernetes-token-renewer_
 
