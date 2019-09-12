@@ -289,7 +289,7 @@ $ k logs pod/vault-kubernetes-synchronizer-demo-vvzxr -c vault-kubernetes-synchr
 2019/08/20 14:00:28 Using annotation [ vault-secret ] to detect managed secrets
 2019/08/20 14:00:28 failed to prepare synchronization of secrets: Error making API request.
 
-URL: GET http://internal-Paxata-Dev-vault-ELB-1522627047.us-west-2.elb.amazonaws.com/v1/sys/mounts
+URL: GET http://example.com/v1/sys/mounts
 Code: 403. Errors:
 
 * 1 error occurred:
