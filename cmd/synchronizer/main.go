@@ -143,6 +143,7 @@ func (sc *syncConfig) synchronize() error {
 			return err
 		}
 		if s == nil {
+			log.Println("secret", v, "not found")
 			continue
 		}
 		// convert data
