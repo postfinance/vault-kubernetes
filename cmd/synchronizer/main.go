@@ -7,6 +7,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -149,7 +150,11 @@ func (sc *syncConfig) synchronize() error {
 		// convert data
 		data := make(map[string][]byte)
 		for k, v := range s {
-			data[k] = []byte(v.(string))
+			w, err := decode(v.(string))
+			if err != nil {
+				return err
+			}
+			data[k] = w
 		}
 		// create/update k8s secret
 		annotations[sc.annotation] = v
@@ -244,4 +249,17 @@ func getEnv(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func decode(s string) ([]byte, error) {
+	if strings.Contains(s, ":") {
+		return []byte(s), nil
+	}
+	v := strings.SplitN(s, ":", 2)
+	switch v[0] {
+	case "base64":
+		return base64.StdEncoding.DecodeString(v[1])
+	default:
+		return []byte(s), fmt.Errorf("%s is not an unsupported codec", v[0])
+	}
 }
