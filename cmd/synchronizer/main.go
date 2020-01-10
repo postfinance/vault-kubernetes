@@ -252,13 +252,17 @@ func getEnv(key, fallback string) string {
 }
 
 func decode(s string) ([]byte, error) {
-	if strings.Contains(s, ":") {
+	if !strings.Contains(s, ":") {
 		return []byte(s), nil
 	}
 	v := strings.SplitN(s, ":", 2)
 	switch v[0] {
 	case "base64":
-		return base64.StdEncoding.DecodeString(v[1])
+		dec, err := base64.StdEncoding.DecodeString(v[1])
+		if err != nil {
+			return []byte(s), err
+		}
+		return dec, nil
 	default:
 		return []byte(s), fmt.Errorf("%s is not an unsupported codec", v[0])
 	}
