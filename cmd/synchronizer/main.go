@@ -7,7 +7,6 @@
 package main
 
 import (
-	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -150,11 +149,7 @@ func (sc *syncConfig) synchronize() error {
 		// convert data
 		data := make(map[string][]byte)
 		for k, v := range s {
-			w, err := decode(v.(string))
-			if err != nil {
-				return err
-			}
-			data[k] = w
+			data[k] = []byte(v.(string))
 		}
 		// create/update k8s secret
 		annotations[sc.annotation] = v
