@@ -152,7 +152,7 @@ func (sc *syncConfig) synchronize() error {
 		for k, v := range s {
 			w, err := decode(v.(string))
 			if err != nil {
-				return err
+				log.Println("ERROR: codec is unknown")
 			}
 			data[k] = w
 		}
@@ -255,7 +255,6 @@ func decode(s string) ([]byte, error) {
 	if !strings.Contains(s, ":") {
 		return []byte(s), nil
 	}
-	log.Println("secret is encoded and will be decoded first")
 	v := strings.SplitN(s, ":", 2)
 	switch v[0] {
 	case "base64":
