@@ -7,23 +7,27 @@
 
 - [Credits](#credits)
 - [Scenarios](#scenarios)
-    - [Scenario 1 - Get a Vault token for one time use](#scenario-1-get-a-vault-token-for-one-time-use)
-    - [Scenario 2 - Sync Vault secrets to Kubernetes secrets](#scenario-2-sync-vault-secrets-to-kubernetes-secrets)
-    - [Scenario 3 - Get a Vault token for use during the lifetime of a pod](#scenario-3-get-a-vault-token-for-use-during-the-lifetime-of-a-pod)
+  - [Scenario 1 - Get a Vault token for one time use](#scenario-1---get-a-vault-token-for-one-time-use)
+  - [Scenario 2 - Sync Vault secrets to Kubernetes secrets](#scenario-2---sync-vault-secrets-to-kubernetes-secrets)
+  - [Scenario 3 - Get a Vault token for use during the lifetime of a pod](#scenario-3---get-a-vault-token-for-use-during-the-lifetime-of-a-pod)
 - [Issues](#issues)
 - [Vault client configuration](#vault-client-configuration)
 - [Init Container _vault-kubernetes-authenticator_](#init-container-_vault-kubernetes-authenticator_)
-    - [Configuration](#configuration)
-    - [Example](#example)
+  - [Configuration](#configuration)
+  - [Example](#example)
 - [Init Container _vault-kubernetes-synchronizer_](#init-container-_vault-kubernetes-synchronizer_)
-    - [Secret Mapping](#secret-mapping)
-    - [Configuration](#configuration-1)
-    - [Error handling](#error-handling)
-    - [Example](#example-1)
-    - [Example - with failed authentication](#example-with-failed-authentication)
+  - [Secret Mapping](#secret-mapping)
+  - [Encoding](#encoding)
+  - [Configuration](#configuration-1)
+  - [Error handling](#error-handling)
+  - [Example](#example-1)
+  - [Example - with failed authentication](#example---with-failed-authentication)
+  - [Example - with failed synchronizer](#example---with-failed-synchronizer)
+    - [Permission issue](#permission-issue)
+    - [KV/Vault engine Version missing](#kvvault-engine-version-missing)
 - [Sidecar _vault-kubernetes-token-renewer_](#sidecar-_vault-kubernetes-token-renewer_)
-    - [Configuration](#configuration-2)
-    - [Example](#example-2)
+  - [Configuration](#configuration-2)
+  - [Example](#example-2)
 - [Build](#build)
 - [Demo](#demo)
 - [Links](#links)
@@ -141,6 +145,17 @@ Depends on Init Container _vault-kubernetes-authenticator_
 |                             | secret/k8s/second     | second      |
 
 > labels/names in Kubernetes will be validated according to [RFC-1123](https://tools.ietf.org/html/rfc1123)
+
+## Encoding
+
+If you have to encode the secret to put it in Vault, e.g. a Java KeyStore (JKS), then you can use base64 and add the prefix "base64:" to the secret in Vault
+
+Create the secret for Vault as follows:
+```
+echo "base64:$(base64 -w0 filename)"
+```
+
+_vault-kubernetes-synchronizer_ will decode the secret from Vault before creating a Kubernetes secret, to prevent double encoding.
 
 ## Configuration
 
