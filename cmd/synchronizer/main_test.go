@@ -28,15 +28,14 @@ func TestDecode(t *testing.T) {
 
 	t.Run("base64 decode fails", func(t *testing.T) {
 		str := "base64:" + quote
-		res, err := decode(str)
+		_, err := decode(str)
 		assert.Error(t, err)
-		assert.Equal(t, str, string(res))
 	})
 
 	t.Run("unknown encoding", func(t *testing.T) {
 		str := "base32:" + base32.StdEncoding.EncodeToString([]byte(quote))
 		res, err := decode(str)
-		assert.Error(t, err)
+		assert.NoError(t, err)
 		assert.Equal(t, str, string(res))
 	})
 }

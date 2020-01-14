@@ -152,7 +152,7 @@ func (sc *syncConfig) synchronize() error {
 		for k, v := range s {
 			w, err := decode(v.(string))
 			if err != nil {
-				log.Println("ERROR: codec is unknown")
+				return err
 			}
 			data[k] = w
 		}
@@ -252,18 +252,10 @@ func getEnv(key, fallback string) string {
 }
 
 func decode(s string) ([]byte, error) {
-	if !strings.Contains(s, ":") {
-		return []byte(s), nil
-	}
-	v := strings.SplitN(s, ":", 2)
-	switch v[0] {
-	case "base64":
-		dec, err := base64.StdEncoding.DecodeString(v[1])
-		if err != nil {
-			return []byte(s), err
-		}
-		return dec, nil
+	switch {
+	case strings.HasPrefix(s, "base64:"):
+		return base64.StdEncoding.DecodeString(strings.TrimLeft(s, "base64:"))
 	default:
-		return []byte(s), fmt.Errorf("%s is not an unsupported codec", v[0])
+		return []byte(s), nil
 	}
 }
