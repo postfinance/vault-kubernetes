@@ -150,7 +150,11 @@ func (sc *syncConfig) synchronize() error {
 		// convert data
 		data := make(map[string][]byte)
 		for k, v := range s {
-			data[k] = []byte(v.(string))
+			w, err := decode(v.(string))
+			if err != nil {
+				return err
+			}
+			data[k] = w
 		}
 		// create/update k8s secret
 		annotations[sc.annotation] = v
