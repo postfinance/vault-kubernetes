@@ -356,6 +356,8 @@ Depends on Init Container _vault-kubernetes-authenticator_
 - VAULT_REAUTH - re-authenticate if the token is invalid (default: "false")
 - VAULT_TTL - requested token ttl (can be overwritten by Vault)
 
+> If you set VAULT_REAUTH to "true", you have to provide all necessary environment variable for authentication (see: _vault-kubernetes-authenticator_)
+
 ## Example
 
 ```
