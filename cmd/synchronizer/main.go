@@ -153,16 +153,33 @@ func (sc *syncConfig) checkSecrets() error {
 }
 
 // synchronize secret from vault to the current kubernetes namespace
-// nolint: gocognit, gocyclo
+// nolint: gocognit, gocyclo, funlen
 func (sc *syncConfig) synchronize() error {
 	// create/update the secrets
 	annotations := make(map[string]string)
 
 	for k, v := range sc.Secrets {
+		var clientExists bool
+
+		var mount string
+
+		for m := range sc.secretClients {
+			if strings.HasPrefix(v, m) {
+				clientExists = true
+				mount = m
+
+				break
+			}
+		}
+
+		if !clientExists {
+			return fmt.Errorf("no client exists for %s", v)
+		}
 		// get secret from vault
+
 		log.Println("read", v, "from vault")
 
-		s, err := sc.secretClients[strings.SplitN(v, "/", 2)[0]].Read(v)
+		s, err := sc.secretClients[mount].Read(v)
 		if err != nil {
 			return err
 		}
@@ -249,15 +266,31 @@ func (sc *syncConfig) prepare() error {
 	secrets := make(map[string]string)
 
 	for k, v := range sc.Secrets {
-		mount := strings.SplitN(v, "/", 2)[0]
-		// ensure kv.Client for mount
-		if _, ok := sc.secretClients[mount]; !ok {
-			secretClient, err := kv.New(sc.vault.Client(), mount+"/")
+		var clientExists bool
+
+		var mount string
+
+		// check if we already have a client for this prefix
+		for m := range sc.secretClients {
+			if strings.HasPrefix(v, m) {
+				clientExists = true
+				mount = m
+				log.Println("found client for mount: ", mount)
+
+				break
+			}
+		}
+
+		if !clientExists {
+			secretClient, err := kv.New(sc.vault.Client(), v)
 			if err != nil {
 				return err
 			}
 
+			mount = secretClient.Mount
 			sc.secretClients[mount] = secretClient
+
+			log.Println("created client for mount: ", mount)
 		}
 		// v is a secret
 		if !strings.HasSuffix(v, "/") {
