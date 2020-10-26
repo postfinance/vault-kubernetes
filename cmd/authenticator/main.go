@@ -6,11 +6,11 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
-	"github.com/pkg/errors"
-	"github.com/postfinance/vault/k8s"
+	k8s "github.com/postfinance/vaultk8s"
 )
 
 func main() {
@@ -22,15 +22,18 @@ func main() {
 	token, err := c.Authenticate()
 	if err != nil {
 		if c.AllowFail {
-			log.Println(errors.Wrap(err, "authentication failed - ALLOW_FAIL is set therefore pod will continue"))
+			log.Println(fmt.Errorf("authentication failed - ALLOW_FAIL is set therefore pod will continue: %w", err))
 			os.Exit(0)
 		}
-		log.Fatal(errors.Wrap(err, "authentication failed"))
+
+		log.Fatal(fmt.Errorf("authentication failed: %w", err))
 	}
+
 	log.Printf("successfully authenticated to vault")
 
 	if err := c.StoreToken(token); err != nil {
 		log.Fatal(err)
 	}
+
 	log.Printf("successfully stored vault token at %s", c.TokenPath)
 }

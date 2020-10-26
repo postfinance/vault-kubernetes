@@ -1,4 +1,4 @@
-FROM golang:1.12-alpine as builder
+FROM golang:1.15.3-alpine as builder
 RUN apk --no-cache add git
 
 ENV GO111MODULE=on
@@ -10,7 +10,7 @@ COPY ./cmd/authenticator/ .
 RUN go build -o /authenticator main.go
 
 # Build runtime
-FROM alpine:3.8 as runtime
+FROM alpine:latest as runtime
 MAINTAINER OpenSource PF <opensource@postfinance.ch>
 
 RUN apk update && apk add --no-cache ca-certificates && update-ca-certificates
