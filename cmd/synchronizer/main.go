@@ -69,6 +69,7 @@ type syncConfig struct {
 	secretClients map[string]*kv.Client
 	vault         *k8s.Vault
 	annotation    string
+	labels        map[string]string
 }
 
 func newFromEnvironment() (*syncConfig, error) {
@@ -84,6 +85,8 @@ func newFromEnvironment() (*syncConfig, error) {
 	c.annotation = getEnv("SYNCHRONIZER_ANNOTATION", vaultAnnotation)
 
 	log.Println("Using annotation [", c.annotation, "] to detect managed secrets")
+
+	c.labels = splitLabels(getEnv("SYNCHRONIZER_LABELS", ""))
 
 	c.Secrets = make(map[string]string)
 
@@ -226,6 +229,8 @@ func (sc *syncConfig) synchronize() error {
 			continue
 		}
 
+		secret.Labels = mergeLabels(existing.Labels, sc.labels)
+
 		log.Println("update secret", secret.Name, "from vault secret", v)
 
 		if _, err = sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Update(context.Background(), secret, metav1.UpdateOptions{}); err != nil {
@@ -333,4 +338,37 @@ func decode(s string) ([]byte, error) {
 	default:
 		return []byte(s), nil
 	}
+}
+
+// splitLabels splits a string like "a=b,c=d,e=f" and returns a map
+func splitLabels(s string) map[string]string {
+	labels := make(map[string]string)
+
+	for _, l := range strings.Split(s, ",") {
+		p := strings.SplitN(l, "=", 2)
+
+		if len(p) != 2 {
+			continue
+		}
+
+		labels[p[0]] = p[1]
+	}
+
+	return labels
+}
+
+// mergeLabels merges existing labels with configured labels
+// existing labels will be overwritten if a configured label with the same key exists
+func mergeLabels(existing, configured map[string]string) map[string]string {
+	labels := make(map[string]string)
+
+	for k, v := range existing {
+		labels[k] = v
+	}
+
+	for k, v := range configured {
+		labels[k] = v
+	}
+
+	return labels
 }

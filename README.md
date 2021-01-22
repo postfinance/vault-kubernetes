@@ -130,7 +130,9 @@ $ k exec -ti vault-kubernetes-authenticator-5675d58d95-4wd8v sh
 
 Depends on Init Container _vault-kubernetes-authenticator_
 
-- each Kubernetes secrets created by _vault-kubernetes-synchronizer_ get the annotation `vault-secret: <vault secret path>`
+- each Kubernetes secrets created by _vault-kubernetes-synchronizer_ gets the annotation `vault-secret: <vault secret path>`
+
+- Existing labels are retained and configured labels are appended to existing ones. If an existing label has the same key as a configured label, the value will be overwritten.
 
 - obsolete secrets created by _vault-kubernetes-synchronizer_ will be deleted
 
@@ -166,6 +168,8 @@ _vault-kubernetes-synchronizer_ will decode the secret from Vault before creatin
 - SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t_" Vault secret "first" will get secret "v3t_first" in k8s)
 
 - SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very usefull if you need more than one `vault-synchronizer` init container in the same namespace.
+
+- SYNCHRONIZER_LABELS - labels added to every synchronized secret. Multiple key-value pairs can be separated with a comma. For each key-value pair a key and the equal sign are mandatory. Example: `"k1=v1,k2=v2,k3=,k4"` k4 will be ignored because the equal sign is missing.
 
 > set ALLOW_FAIL="true" for _vault-kubernetes-authenticator_
 
