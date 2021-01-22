@@ -1,5 +1,5 @@
-FROM golang:1.15.3-alpine as builder
-RUN apk --no-cache add git
+FROM golang:1.15.7-alpine as builder
+#RUN apk --no-cache add git
 
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
