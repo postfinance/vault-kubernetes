@@ -169,7 +169,7 @@ _vault-kubernetes-synchronizer_ will decode the secret from Vault before creatin
 
 - SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very usefull if you need more than one `vault-synchronizer` init container in the same namespace.
 
-- SYNCHRONIZER_LABELS - labels added to every synchronized secret. Multiple key-value pairs can be separated with a comma. For each key-value pair a key and the equal sign are mandatory. Example: `"k1=v1,k2=v2,k3=,k4"` k4 will be ignored because the equal sign is missing.
+- SYNCHRONIZER_LABELS - labels will be added to every synchronized secret. Multiple key-value pairs can be separated with a comma. For each key-value pair a key and the equal sign are mandatory. Example: `"k1=v1,k2=v2,k3=,k4"` k4 will be ignored because the equal sign is missing.
 
 > set ALLOW_FAIL="true" for _vault-kubernetes-authenticator_
 
@@ -347,6 +347,91 @@ $ vault secrets list -detailed | grep kv
 kv/                 kv           kv_894f5894           system         system     false             replicated     false        map[version:1]    n/a                                                        f0736f4d-343d-e32a-b2c5-897bf3552f1f
 secret/             kv           kv_8210532d           system         system     false             replicated     false        map[version:2]    n/a                                                        1dd5df15-8178-7843-6795-f05def3c3db8
 ```
+
+## Example - Using labels
+
+Initial synchronized secrets:
+$ k get secrets | grep ^vault- | grep -v token
+vault-alpha              Opaque                                1      26m
+vault-beta               Opaque                                1      26m
+vault-first              Opaque                                2      26m
+vault-gamma              Opaque                                1      26m
+vault-second             Opaque                                2      26m
+vault-third              Opaque                                2      26m
+
+
+Add labels for some secrets:
+```
+$ for i in alpha beta gamma; do printf "labels of secret %12s: %s\n" vault-$i $(k get secret vault-${i} -o=jsonpath="{.metadata['labels']}"); done
+labels of secret  vault-alpha: {"batman":"unkown","jocker":"jack_napier","superman":"unknown"}
+labels of secret   vault-beta: {"batman":"bruce_wayne","joker":"jack_napier"}
+labels of secret  vault-gamma: {"superman":"kal-el"}
+```
+
+Add SYNCHRONIZER_LABELS to your deployment:
+```
+$ vi deployment.yaml
+...
+        - name: SYNCHRONIZER_LABELS
+          value: batman=bruce_wayne,superman=kal-el
+...
+> All synchronized secrets will get these labels.
+
+Redeploy and check the labels:
+```
+$ for i in alpha beta gamma; do printf "labels of secret %12s: %s\n" vault-$i $(k get secret vault-${i} -o=jsonpath="{.metadata['labels']}"); done
+labels of secret  vault-alpha: {"batman":"bruce_wayne","jocker":"jack_napier","superman":"kal-el"}
+labels of secret   vault-beta: {"batman":"bruce_wayne","joker":"jack_napier","superman":"kal-el"}
+labels of secret  vault-gamma: {"batman":"bruce_wayne","superman":"kal-el"}
+```
+
+> Existing labels are retained or overwritten.
+
+## Example - Custom annotation
+
+Set our custom annotation:
+```
+$ vi deployment.yaml
+...
+        - name: SYNCHRONIZER_ANNOTATION
+          value: synchronized
+...
+```
+
+Deploy and check the annotations:
+```
+$ for i in alpha beta gamma; do printf "annotations of secret %12s: %s\n" vault-$i $(k get secret vault-${i} -o=jsonpath="{.metadata['annotations']}"); done
+annotations of secret  vault-alpha: {"synchronized":"secret/e1-k8s-pfnet-a/scratch-sauterm/greek/alpha"}
+annotations of secret   vault-beta: {"synchronized":"secret/e1-k8s-pfnet-a/scratch-sauterm/greek/beta"}
+annotations of secret  vault-gamma: {"synchronized":"secret/e1-k8s-pfnet-a/scratch-sauterm/greek/gamma"}
+```
+
+Change your custom annotation:
+```
+$ vi deployment.yaml
+...
+        - name: SYNCHRONIZER_ANNOTATION
+          value: vault-kubernetes-synchronizer
+...
+```
+
+Deploy and check the logs of your vault-kubernetes-synchronizer pod:
+```
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/greek/alpha from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-alpha - not managed by synchronizer
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/greek/beta from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-beta - not managed by synchronizer
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/greek/gamma from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-gamma - not managed by synchronizer
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/first from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-first - not managed by synchronizer
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/second from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-second - not managed by synchronizer
+2021/01/25 11:19:33 read secret/e1-k8s-pfnet-a/scratch-sauterm/first from vault
+2021/01/25 11:19:33 WARNING: ignoring secret vault-third - not managed by synchronizer
+```
+
+> Changing the annotation does not work. You have to delete the secrets first.
 
 # Sidecar _vault-kubernetes-token-renewer_
 
