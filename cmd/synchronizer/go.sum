@@ -253,8 +253,6 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/posener/complete v1.1.1/go.mod h1:em0nMJCgc9GFtwrmVmEMR/ZL6WyhyjMBndrE9hABlRI=
 github.com/postfinance/vaultk8s v0.0.1 h1:NhikMOYrkIz+2aDmAs9QCAmeezoDWEJjSvbnpGxgliY=
 github.com/postfinance/vaultk8s v0.0.1/go.mod h1:Bp3uFmjYqQht27mcRsu1XqyWkq2McIEsWBpcLQoIukA=
-github.com/postfinance/vaultkv v0.0.1 h1:L5SQNCCyth5sMvzLEtzCD5p6sBQgcQIwlRvfKTWWJpg=
-github.com/postfinance/vaultkv v0.0.1/go.mod h1:sOySuNaRcLLmGrdO+lhhyzIxL3PogO9BE+6o5R5/kOI=
 github.com/postfinance/vaultkv v0.0.2 h1:rg86bMt15kPgRZLxqt/VrKjbgkhFGwWVYDXLaPw0woI=
 github.com/postfinance/vaultkv v0.0.2/go.mod h1:sOySuNaRcLLmGrdO+lhhyzIxL3PogO9BE+6o5R5/kOI=
 github.com/prometheus/client_golang v0.9.2/go.mod h1:OsXs2jCmiKlQ1lTBmv21f2mNfw4xf/QclQDMrYNZzcM=
