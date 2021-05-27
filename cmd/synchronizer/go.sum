@@ -255,6 +255,8 @@ github.com/postfinance/vaultk8s v0.0.1 h1:NhikMOYrkIz+2aDmAs9QCAmeezoDWEJjSvbnpG
 github.com/postfinance/vaultk8s v0.0.1/go.mod h1:Bp3uFmjYqQht27mcRsu1XqyWkq2McIEsWBpcLQoIukA=
 github.com/postfinance/vaultkv v0.0.1 h1:L5SQNCCyth5sMvzLEtzCD5p6sBQgcQIwlRvfKTWWJpg=
 github.com/postfinance/vaultkv v0.0.1/go.mod h1:sOySuNaRcLLmGrdO+lhhyzIxL3PogO9BE+6o5R5/kOI=
+github.com/postfinance/vaultkv v0.0.2 h1:rg86bMt15kPgRZLxqt/VrKjbgkhFGwWVYDXLaPw0woI=
+github.com/postfinance/vaultkv v0.0.2/go.mod h1:sOySuNaRcLLmGrdO+lhhyzIxL3PogO9BE+6o5R5/kOI=
 github.com/prometheus/client_golang v0.9.2/go.mod h1:OsXs2jCmiKlQ1lTBmv21f2mNfw4xf/QclQDMrYNZzcM=
 github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910/go.mod h1:MbSGuTsp3dbXC40dX6PRTWyKYBIrTGTE9sqQNg2J8bo=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
