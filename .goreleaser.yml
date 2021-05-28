@@ -1,6 +1,8 @@
 project_name: vault-kubernetes
 release:
-    disable: true
+  github:
+    owner: postfinance
+    name: vault-kubernetes
 builds:
     - id: synchronizer
       goos:
