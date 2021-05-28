@@ -1,0 +1,83 @@
+project_name: vault-kubernetes
+release:
+    disable: true
+builds:
+    - id: synchronizer
+      goos:
+        - linux
+      goarch:
+        - amd64
+      main: ./cmd/synchronizer/
+      binary: synchronizer
+      env:
+        - CGO_ENABLED=0
+    - id: authenticator
+      goos:
+        - linux
+      goarch:
+        - amd64
+      main: ./cmd/authenticator/
+      binary: authenticator
+      env:
+        - CGO_ENABLED=0
+    - id: token-renewer
+      goos:
+        - linux
+      goarch:
+        - amd64
+      main: ./cmd/token-renewer/
+      binary: token-renewer
+      env:
+        - CGO_ENABLED=0
+dockers:
+    - ids:
+        - synchronizer
+      goos: linux
+      goarch: amd64
+      dockerfile: packaging/docker/synchronizer/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
+        - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}
+        - postfinance/{{ .ProjectName }}-synchronizer:latest
+      build_flag_templates:
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
+    - ids:
+        - authenticator
+      goos: linux
+      goarch: amd64
+      dockerfile: packaging/docker/authenticator/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
+        - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}
+        - postfinance/{{ .ProjectName }}-authenticator:latest
+      build_flag_templates:
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
+    - ids:
+        - token-renewer
+      goos: linux
+      goarch: amd64
+      dockerfile: packaging/docker/token-renewer/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
+        - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}
+        - postfinance/{{ .ProjectName }}-token-renewer:latest
+      build_flag_templates:
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
