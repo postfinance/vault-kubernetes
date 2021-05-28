@@ -1,3 +1,17 @@
+## 0.2.0 (2021-05-28)
+
+
+### Bug Fixes
+
+* **goreleaser**: enable github releases ([d13ffdfd](https://github.com/postfinance/vault-kubernetes/commit/d13ffdfd))
+
+
+### New Features
+
+* **common**: use goreleaser to build images ([#19](https://github.com/postfinance/vault-kubernetes/issues/19), [2f6a6548](https://github.com/postfinance/vault-kubernetes/commit/2f6a6548))
+
+
+
 ## 0.1.7 (2021-01-27)
 
 
