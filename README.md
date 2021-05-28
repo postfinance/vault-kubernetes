@@ -1,5 +1,4 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/postfinance/vault-kubernetes)](https://goreportcard.com/report/github.com/postfinance/vault-kubernetes)
-[![Docker Build](https://img.shields.io/docker/cloud/automated/postfinance/vault-kubernetes-authenticator.svg)](https://hub.docker.com/u/postfinance)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
