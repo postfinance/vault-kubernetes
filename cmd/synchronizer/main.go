@@ -295,7 +295,7 @@ func (sc *syncConfig) prepare() error {
 			mount = secretClient.Mount
 			sc.secretClients[mount] = secretClient
 
-			log.Println("created client for mount: ", mount)
+			log.Printf("created v%d client for mount: %s", secretClient.Version, mount)
 		}
 		// v is a secret
 		if !strings.HasSuffix(v, "/") {
