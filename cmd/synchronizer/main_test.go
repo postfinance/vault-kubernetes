@@ -11,6 +11,7 @@ import (
 
 const (
 	quote = "The fool don‘t think he is wise, but the wise man knows himself to be a fool."
+	trivialString = "h"
 )
 
 func TestDecode(t *testing.T) {
@@ -25,6 +26,13 @@ func TestDecode(t *testing.T) {
 		res, err := decode(str)
 		assert.NoError(t, err)
 		assert.Equal(t, quote, string(res))
+	})
+
+	t.Run("base64 encoded", func(t *testing.T) {
+		str := "base64:" + base64.StdEncoding.EncodeToString([]byte(trivialString))
+		res, err := decode(str)
+		assert.NoError(t, err)
+		assert.Equal(t, trivialString, string(res))
 	})
 
 	t.Run("base64 decode fails", func(t *testing.T) {
