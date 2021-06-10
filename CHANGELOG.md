@@ -1,3 +1,12 @@
+## 0.2.1 (2021-06-10)
+
+
+### Bug Fixes
+
+* **decode**: fixing decode function for base64 secrets ([421d6017](https://github.com/postfinance/vault-kubernetes/commit/421d6017))
+
+
+
 ## 0.2.0 (2021-05-28)
 
 
