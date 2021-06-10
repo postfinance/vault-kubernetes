@@ -334,7 +334,7 @@ func getEnv(key, fallback string) string {
 func decode(s string) ([]byte, error) {
 	switch {
 	case strings.HasPrefix(s, "base64:"):
-		return base64.StdEncoding.DecodeString(strings.TrimLeft(s, "base64:"))
+		return base64.StdEncoding.DecodeString(strings.TrimPrefix(s, "base64:"))
 	default:
 		return []byte(s), nil
 	}
