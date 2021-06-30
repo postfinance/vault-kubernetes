@@ -10,7 +10,6 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -114,7 +113,7 @@ func newFromEnvironment() (*syncConfig, error) {
 	c.SecretPrefix = os.Getenv("SECRET_PREFIX")
 
 	// current kubernetes namespace
-	content, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	content, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
 	if err != nil {
 		return nil, fmt.Errorf("could not get namespace: %w", err)
 	}
