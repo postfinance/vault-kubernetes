@@ -205,7 +205,7 @@ func (sc *syncConfig) synchronize() error {
 			}
 		}
 
-		if data == nil {
+		if len(data) == 0 {
 			log.Println("secret", v, "is not a simple key-value, skipping")
 			continue
 		}
