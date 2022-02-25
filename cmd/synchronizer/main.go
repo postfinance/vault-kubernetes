@@ -202,11 +202,16 @@ func (sc *syncConfig) synchronize() error {
 					return err
 				}
 				data[k] = w
+			} else {
+				slice, ok := v.([]byte)
+				if ok {
+					data[k] = slice
+				}
 			}
 		}
 
 		if len(data) == 0 {
-			log.Println("secret", v, "is not a simple key-value, skipping")
+			log.Println("secret", v, "data conversion failed, skipping")
 			continue
 		}
 
