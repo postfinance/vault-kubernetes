@@ -201,6 +201,7 @@ func (sc *syncConfig) synchronize() error {
 				if err != nil {
 					return err
 				}
+
 				data[k] = w
 			}
 		}
