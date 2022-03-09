@@ -100,8 +100,8 @@ jobs:
     - name: GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
-        version: $GITHUB_REF_NAME
-        args: release --rm-dist
+        version: latest
+        args: release --rm-dist --snapshot -f .goreleaser-auth.yml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
