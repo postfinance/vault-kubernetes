@@ -38,7 +38,7 @@ dockers:
       goarch: amd64
       dockerfile: packaging/docker/synchronizer/Dockerfile
       image_templates:
-        - postfinance/{{ .ProjectName }}-synchronizer:auth
+        - postfinance/{{ .ProjectName }}-synchronizer:feature
       build_flag_templates:
         - --label=org.opencontainers.image.created={{ .Date }}
         - --label=org.opencontainers.image.revision={{ .ShortCommit }}
@@ -53,7 +53,7 @@ dockers:
       goarch: amd64
       dockerfile: packaging/docker/authenticator/Dockerfile
       image_templates:
-        - postfinance/{{ .ProjectName }}-authenticator:auth
+        - postfinance/{{ .ProjectName }}-authenticator:feature
       build_flag_templates:
         - --label=org.opencontainers.image.created={{ .Date }}
         - --label=org.opencontainers.image.revision={{ .ShortCommit }}
@@ -68,7 +68,7 @@ dockers:
       goarch: amd64
       dockerfile: packaging/docker/token-renewer/Dockerfile
       image_templates:
-        - postfinance/{{ .ProjectName }}-token-renewer:auth
+        - postfinance/{{ .ProjectName }}-token-renewer:feature
       build_flag_templates:
         - --label=org.opencontainers.image.created={{ .Date }}
         - --label=org.opencontainers.image.revision={{ .ShortCommit }}

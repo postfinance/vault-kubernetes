@@ -82,7 +82,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-branch:
-    if: github.ref == 'refs/heads/auth'
+    if: github.ref == 'refs/heads/feature'
     needs:
     - lint
     - test
@@ -101,7 +101,7 @@ jobs:
       uses: goreleaser/goreleaser-action@v2
       with:
         version: latest
-        args: release --rm-dist --snapshot -f .goreleaser-auth.yml
+        args: release --rm-dist -f .goreleaser-feature.yml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
