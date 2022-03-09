@@ -194,13 +194,23 @@ func (sc *syncConfig) synchronize() error {
 		data := make(map[string][]byte)
 
 		for k, v := range s {
-			w, err := decode(v.(string))
-			if err != nil {
-				return err
-			}
+			// Verify if v is string to avoid panic.
+			str, ok := v.(string)
+			if ok {
+				w, err := decode(str)
+				if err != nil {
+					return err
+				}
 
-			data[k] = w
+				data[k] = w
+			}
 		}
+
+		if len(data) == 0 {
+			log.Println("secret", v, "is not a simple key-value, skipping")
+			continue
+		}
+
 		// create/update k8s secret
 		annotations[sc.annotation] = v
 		secret := &corev1.Secret{}

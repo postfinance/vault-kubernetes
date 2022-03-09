@@ -27,12 +27,8 @@ linters-settings:
     min-complexity: 15
   goimports:
     local-prefixes: github.com/ewohltman/ephemeral-roles
-  golint:
-    min-confidence: 0.8
   govet:
     check-shadowing: true
-  maligned:
-    suggest-new: true
   misspell:
     locale: US
 
@@ -57,19 +53,15 @@ linters:
     - godox
     - gofmt
     - goimports
-    - golint
     - goprintffuncname
     - gosec
     - gosimple
     - govet
     - ineffassign
-    - interfacer
-    - maligned
     - misspell
     - nakedret
     - prealloc
     - rowserrcheck
-    - scopelint # todo
     - staticcheck
     - structcheck
     - stylecheck

@@ -10,20 +10,17 @@ jobs:
       with:
         go-version: 1.17
         stable: true
-    # Use @master because we want the
-    # skip-go-installation option which has not yet been released.
     - name: Install golangci-lint
       uses: golangci/golangci-lint-action@master
       with:
-        version: v1.43.0
-        skip-go-installation: true
+        version: v1.44.2
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-go@v2
       with:
-        go-version: 1.7
+        go-version: 1.17
         stable: true
     - name: Run Unit tests
       run: go test -race -covermode atomic -coverprofile=profile.cov ./...

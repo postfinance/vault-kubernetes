@@ -1,3 +1,12 @@
+## 0.2.5 (2022-02-28)
+
+merge @pszmytka-viacom PR to prevent crashes on non key-value secrets
+
+## 0.2.4 (2022-02-28)
+
+## 0.2.4 (2022-02-28)
+
+
 ## 0.2.3 (2021-10-15)
 
 
