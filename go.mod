@@ -3,8 +3,8 @@ module github.com/postfinance/vault-kubernetes
 go 1.17
 
 require (
-	github.com/postfinance/vaultk8s v0.0.3-0.20220115155417-cc62b640612f
-	github.com/postfinance/vaultkv v0.0.4-0.20211215164011-1ef26efd65bf
+	github.com/postfinance/vaultk8s v0.1.0
+	github.com/postfinance/vaultkv v0.0.4
 	github.com/stretchr/testify v1.7.0
 	k8s.io/api v0.23.4
 	k8s.io/apimachinery v0.23.4
