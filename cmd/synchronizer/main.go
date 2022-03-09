@@ -217,6 +217,7 @@ func (sc *syncConfig) synchronize() error {
 		secret.Name = fmt.Sprintf("%s%s", sc.SecretPrefix, k)
 		secret.Data = data
 		secret.Annotations = annotations
+		secret.Labels = sc.labels
 		// create (insert) or update the secret
 		existing, err := sc.k8sClientset.CoreV1().Secrets(sc.Namespace).Get(context.Background(), secret.Name, metav1.GetOptions{})
 		if err != nil {
