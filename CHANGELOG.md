@@ -1,3 +1,12 @@
+## 0.2.6 (2022-03-14)
+
+
+### Bug Fixes
+
+* **common**: fixes #24 ([10bae6f8](https://github.com/postfinance/vault-kubernetes/commit/10bae6f8))
+
+
+
 ## 0.2.5 (2022-02-28)
 
 merge @pszmytka-viacom PR to prevent crashes on non key-value secrets
