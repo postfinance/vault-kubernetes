@@ -102,6 +102,15 @@ The usual environment variables for Vault will be used:
 ## Configuration
 
 - VAULT_ROLE - Required the name of the Vault role to use for authentication.
+> For a successful Kubernetes authentication the environment variable VAULT_ROLE must be set.
+
+...or...
+
+- VAULT_ROLE_ID - see https://www.vaultproject.io/docs/auth/approle
+- VAULT_SECRET_ID - see https://www.vaultproject.io/docs/auth/approle
+
+> If the environment variables VAULT_ROLE_ID and VAULT_SECRET_ID are set, AppRole Auth Method will be used, Kubernetes Auth Method otherwise.
+
 
 - VAULT_TOKEN_PATH - the destination path on disk to store the token. Usually this is a shared volume.
 
