@@ -174,7 +174,7 @@ _vault-kubernetes-synchronizer_ will decode the secret from Vault before creatin
 
 - VAULT_SECRETS - comma separated list of secrets (see Secret Mapping)
 
-- SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t_" Vault secret "first" will get secret "v3t_first" in k8s)
+- SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t-" Vault secret "first" will get secret "v3t-first" in k8s)
 
 - SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very usefull if you need more than one `vault-synchronizer` init container in the same namespace.
 

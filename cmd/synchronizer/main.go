@@ -9,10 +9,12 @@ package main
 import (
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"path"
+	"reflect"
 	"strings"
 
 	k8s "github.com/postfinance/vaultk8s"
@@ -194,16 +196,12 @@ func (sc *syncConfig) synchronize() error {
 		data := make(map[string][]byte)
 
 		for k, v := range s {
-			// Verify if v is string to avoid panic.
-			str, ok := v.(string)
-			if ok {
-				w, err := decode(str)
-				if err != nil {
-					return err
-				}
-
-				data[k] = w
+			w, err := decode(v)
+			if err != nil {
+				return err
 			}
+
+			data[k] = w
 		}
 
 		if len(data) == 0 {
@@ -341,12 +339,39 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
-func decode(s string) ([]byte, error) {
-	switch {
-	case strings.HasPrefix(s, "base64:"):
-		return base64.StdEncoding.DecodeString(strings.TrimPrefix(s, "base64:"))
+// decode returns ...
+func decode(v interface{}) ([]byte, error) {
+	switch reflect.TypeOf(v).Kind() {
+	case reflect.Bool:
+		return []byte(fmt.Sprintf("%v", v)), nil
+	case reflect.String:
+		// Vault uses json.Number reflection will recognize them as string
+		/*
+			https://pkg.go.dev/github.com/hashicorp/vault/api#Logical.Read calls
+			https://pkg.go.dev/github.com/hashicorp/vault/api#Logical.ReadWithDataWithContext uses
+			https://pkg.go.dev/github.com/hashicorp/vault/api#ParseSecret calls
+			https://pkg.go.dev/github.com/hashicorp/vault/sdk/helper/jsonutil#DecodeJSONFromReader uses encoding/json with
+			...
+			// While decoding JSON values, interpret the integer values as `json.Number`s instead of `float64`.
+			dec.UseNumber()
+		*/
+		n, ok := v.(json.Number)
+		if ok {
+			return []byte(n.String()), nil
+		}
+
+		// base64 encoded strings with prefix "base64:" will be decoded first
+		if strings.HasPrefix(v.(string), "base64:") {
+			return base64.StdEncoding.DecodeString(strings.TrimPrefix(v.(string), "base64:"))
+		}
+
+		return []byte(v.(string)), nil
+	case reflect.Slice:
+		return json.Marshal(&v)
+	case reflect.Map:
+		return json.Marshal(&v)
 	default:
-		return []byte(s), nil
+		return []byte(fmt.Sprintf("%v", v)), nil
 	}
 }
 
