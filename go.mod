@@ -7,7 +7,7 @@ require (
 	github.com/postfinance/vaultkv v0.0.4
 	github.com/stretchr/testify v1.8.0
 	k8s.io/api v0.25.3
-	k8s.io/apimachinery v0.25.3
+	k8s.io/apimachinery v0.25.4
 	k8s.io/client-go v0.25.3
 )
 
