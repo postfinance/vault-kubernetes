@@ -9,6 +9,7 @@ builds:
         - linux
       goarch:
         - amd64
+        - arm64
       main: ./cmd/synchronizer/
       binary: synchronizer
       env:
@@ -18,6 +19,7 @@ builds:
         - linux
       goarch:
         - amd64
+        - arm64
       main: ./cmd/authenticator/
       binary: authenticator
       env:
@@ -27,6 +29,7 @@ builds:
         - linux
       goarch:
         - amd64
+        - arm64
       main: ./cmd/token-renewer/
       binary: token-renewer
       env:
@@ -42,6 +45,25 @@ dockers:
         - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}
         - postfinance/{{ .ProjectName }}-synchronizer:latest
       build_flag_templates:
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
+    - ids:
+        - synchronizer
+      goos: linux
+      use: buildx
+      goarch: arm64
+      dockerfile: packaging/docker/synchronizer/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
+        - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}-arm64
+        - postfinance/{{ .ProjectName }}-synchronizer:latest-arm64
+      build_flag_templates:
+        - --platform=linux/arm64
         - --label=org.opencontainers.image.created={{ .Date }}
         - --label=org.opencontainers.image.revision={{ .ShortCommit }}
         - --label=org.opencontainers.image.source={{ .GitURL }}
@@ -67,6 +89,25 @@ dockers:
         - --label=org.opencontainers.image.version={{ .Version }}
         - --pull
     - ids:
+        - authenticator
+      goos: linux
+      use: buildx
+      goarch: arm64
+      dockerfile: packaging/docker/authenticator/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
+        - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}-arm64
+        - postfinance/{{ .ProjectName }}-authenticator:latest-arm64
+      build_flag_templates:
+        - --platform=linux/arm64
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
+    - ids:
         - token-renewer
       goos: linux
       goarch: amd64
@@ -76,6 +117,25 @@ dockers:
         - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}
         - postfinance/{{ .ProjectName }}-token-renewer:latest
       build_flag_templates:
+        - --label=org.opencontainers.image.created={{ .Date }}
+        - --label=org.opencontainers.image.revision={{ .ShortCommit }}
+        - --label=org.opencontainers.image.source={{ .GitURL }}
+        - --label=org.opencontainers.image.url={{ .GitURL }}
+        - --label=org.opencontainers.image.vendor=PostFinance AG
+        - --label=org.opencontainers.image.version={{ .Version }}
+        - --pull
+    - ids:
+        - token-renewer
+      goos: linux
+      use: buildx
+      goarch: arm64
+      dockerfile: packaging/docker/token-renewer/Dockerfile
+      image_templates:
+        - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
+        - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}-arm64
+        - postfinance/{{ .ProjectName }}-token-renewer:latest-arm64
+      build_flag_templates:
+        - --platform=linux/arm64
         - --label=org.opencontainers.image.created={{ .Date }}
         - --label=org.opencontainers.image.revision={{ .ShortCommit }}
         - --label=org.opencontainers.image.source={{ .GitURL }}
