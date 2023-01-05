@@ -40,6 +40,7 @@ dockers:
       goos: linux
       goarch: amd64
       dockerfile: packaging/docker/synchronizer/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
         - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}
@@ -55,9 +56,9 @@ dockers:
     - ids:
         - synchronizer
       goos: linux
-      use: buildx
       goarch: arm64
       dockerfile: packaging/docker/synchronizer/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
         - postfinance/{{ .ProjectName }}-synchronizer:{{ .Major }}.{{ .Minor }}-arm64
@@ -76,6 +77,7 @@ dockers:
       goos: linux
       goarch: amd64
       dockerfile: packaging/docker/authenticator/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
         - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}
@@ -91,9 +93,9 @@ dockers:
     - ids:
         - authenticator
       goos: linux
-      use: buildx
       goarch: arm64
       dockerfile: packaging/docker/authenticator/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
         - postfinance/{{ .ProjectName }}-authenticator:{{ .Major }}.{{ .Minor }}-arm64
@@ -112,6 +114,7 @@ dockers:
       goos: linux
       goarch: amd64
       dockerfile: packaging/docker/token-renewer/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}
         - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}
@@ -127,9 +130,9 @@ dockers:
     - ids:
         - token-renewer
       goos: linux
-      use: buildx
       goarch: arm64
       dockerfile: packaging/docker/token-renewer/Dockerfile
+      use: buildx
       image_templates:
         - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}.{{ .Patch }}-arm64
         - postfinance/{{ .ProjectName }}-token-renewer:{{ .Major }}.{{ .Minor }}-arm64
