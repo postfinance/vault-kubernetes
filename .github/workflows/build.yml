@@ -12,8 +12,8 @@ jobs:
     - uses: actions/setup-go@v3
       with:
         go-version: 1.19
-        stable: true
-    - uses: golangci/golangci-lint-action@master
+    - name: Install golangci-lint
+      uses: golangci/golangci-lint-action@master
       with:
         version: v1.50.1
   test:
@@ -52,7 +52,6 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
-        stable: true
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
@@ -80,7 +79,6 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
-        stable: true
     - name: GoReleaser
       uses: goreleaser/goreleaser-action@v4
       with:

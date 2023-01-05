@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/vault/api v1.8.2
 	github.com/ory/dockertest v3.3.5+incompatible
 	github.com/postfinance/vaultk8s v0.1.1
-	github.com/postfinance/vaultkv v0.0.4
+	github.com/postfinance/vaultkv v0.0.5
 	github.com/stretchr/testify v1.8.1
 	k8s.io/api v0.26.0
 	k8s.io/apimachinery v0.26.0
@@ -82,7 +82,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
+	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
 	golang.org/x/net v0.4.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
 	golang.org/x/sys v0.3.0 // indirect
