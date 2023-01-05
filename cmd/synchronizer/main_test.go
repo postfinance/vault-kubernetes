@@ -21,6 +21,8 @@ import (
 	"github.com/ory/dockertest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	_ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 )
 
 const (
