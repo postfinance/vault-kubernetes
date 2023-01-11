@@ -1,3 +1,39 @@
+## 0.3.1 (2023-01-11)
+
+
+### Bug Fixes
+
+* **goreleaser**: add arm64 support ([b4c108e8](https://github.com/postfinance/vault-kubernetes/commit/b4c108e8))
+
+
+### Build System
+
+* **deps**: bump github.com/stretchr/testify from 1.8.0 to 1.8.1 ([0cb9b151](https://github.com/postfinance/vault-kubernetes/commit/0cb9b151))
+  > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.0 to 1.8.1.
+  > - [Release notes](https://github.com/stretchr/testify/releases)
+  > - [Commits](https://github.com/stretchr/testify/compare/v1.8.0...v1.8.1)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: github.com/stretchr/testify
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-patch
+  > ...
+* **deps**: bump k8s.io/client-go from 0.25.3 to 0.26.0 ([e09cbfe7](https://github.com/postfinance/vault-kubernetes/commit/e09cbfe7))
+  > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.25.3 to 0.26.0.
+  > - [Release notes](https://github.com/kubernetes/client-go/releases)
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Commits](https://github.com/kubernetes/client-go/compare/v0.25.3...v0.26.0)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/client-go
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-minor
+  > ...
+
+
+
 ## 0.3.0 (2022-10-18)
 
 
