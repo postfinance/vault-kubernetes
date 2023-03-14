@@ -500,3 +500,4 @@ cd demo
 - [Github - vault-kubernetes-authenticator](https://github.com/sethvargo/vault-kubernetes-authenticator)
 - [Vault - Kubernetes Auth Method](https://www.vaultproject.io/docs/auth/kubernetes.html)
 - [Kubernetes - Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers)
+
