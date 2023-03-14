@@ -3,14 +3,14 @@ module github.com/postfinance/vault-kubernetes
 go 1.19
 
 require (
-	github.com/hashicorp/vault/api v1.8.2
+	github.com/hashicorp/vault/api v1.9.0
 	github.com/ory/dockertest v3.3.5+incompatible
 	github.com/postfinance/vaultk8s v0.1.1
 	github.com/postfinance/vaultkv v0.0.5
-	github.com/stretchr/testify v1.8.1
-	k8s.io/api v0.26.0
-	k8s.io/apimachinery v0.26.0
-	k8s.io/client-go v0.26.0
+	github.com/stretchr/testify v1.8.2
+	k8s.io/api v0.26.2
+	k8s.io/apimachinery v0.26.2
+	k8s.io/client-go v0.26.2
 )
 
 require (
@@ -81,13 +81,14 @@ require (
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
-	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
-	golang.org/x/sys v0.3.0 // indirect
-	golang.org/x/term v0.3.0 // indirect
-	golang.org/x/text v0.5.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/term v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20211221231510-d629cc9a93d5 // indirect
