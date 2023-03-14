@@ -118,7 +118,7 @@ The usual environment variables for Vault will be used:
 
 - SERVICE_ACCOUNT_TOKEN_PATH - the path on disk where the Kubernetes service account jtw token lives. This defaults to /var/run/secrets/kubernetes.io/serviceaccount/token.
 
-- ALLOW_FAIL - the container will successfully terminate even if the authentication to Vault failed, no token will be written to VAULT_TOKEN_PATH. **This condition needs to be handeled in the succeeding container.** (default: "false")
+- ALLOW_FAIL - the container will successfully terminate even if the authentication to Vault failed, no token will be written to VAULT_TOKEN_PATH. **This condition needs to be handled in the succeeding container.** (default: "false")
 
 ## Example
 
@@ -176,7 +176,7 @@ _vault-kubernetes-synchronizer_ will decode the secret from Vault before creatin
 
 - SECRET_PREFIX - prefix for synchronized secrets (e.g. for SECRET_PREFIX="v3t_" Vault secret "first" will get secret "v3t_first" in k8s)
 
-- SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very usefull if you need more than one `vault-synchronizer` init container in the same namespace.
+- SYNCHRONIZER_ANNOTATION - annotation used to track managed secrets (default value `vault-secret`). Can be very useful if you need more than one `vault-synchronizer` init container in the same namespace.
 
 - SYNCHRONIZER_LABELS - labels will be added to every synchronized secret. Multiple key-value pairs can be separated with a comma. For each key-value pair a key and the equal sign are mandatory. Example: `"k1=v1,k2=v2,k3=,k4"` k4 will be ignored because the equal sign is missing.
 
@@ -184,8 +184,8 @@ _vault-kubernetes-synchronizer_ will decode the secret from Vault before creatin
 
 ## Error handling
 
-If Vault authentication fails in _vault-kubernetes-authenticator_ and ALLOW_FAIL="true" has been set for _vault-kubernetes-authenticator_ the failed authentication will be handeled as follows:
-- all secrets in VAULT_SECRETS are available in the namespace (the content of the secrets will not be considered)- _vault-kubernetes-synchronizer_ issues a warning and terminates successfullly.
+If Vault authentication fails in _vault-kubernetes-authenticator_ and ALLOW_FAIL="true" has been set for _vault-kubernetes-authenticator_ the failed authentication will be handled as follows:
+- all secrets in VAULT_SECRETS are available in the namespace (the content of the secrets will not be considered)- _vault-kubernetes-synchronizer_ issues a warning and terminates successfully.
 - any secret from VAULT_SECRETS is missing in the namespace _vault-secret-synchronizer_ fails.
 
 ## Example
@@ -210,7 +210,7 @@ green     lantern
 poison    ivy
 ```
 
-Configure the two secrets for synchronisation with the environment variable VAULT_SECRETS:
+Configure the two secrets for synchronization with the environment variable VAULT_SECRETS:
 ```
 $ vi deployment.yaml
 ...
@@ -372,7 +372,7 @@ vault-third              Opaque                                2      26m
 Add labels for some secrets:
 ```
 $ for i in alpha beta gamma; do printf "labels of secret %12s: %s\n" vault-$i $(k get secret vault-${i} -o=jsonpath="{.metadata['labels']}"); done
-labels of secret  vault-alpha: {"batman":"unkown","jocker":"jack_napier","superman":"unknown"}
+labels of secret  vault-alpha: {"batman":"unknown","jocker":"jack_napier","superman":"unknown"}
 labels of secret   vault-beta: {"batman":"bruce_wayne","joker":"jack_napier"}
 labels of secret  vault-gamma: {"superman":"kal-el"}
 ```

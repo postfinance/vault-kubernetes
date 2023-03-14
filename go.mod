@@ -1,6 +1,6 @@
 module github.com/postfinance/vault-kubernetes
 
-go 1.17
+go 1.20
 
 require (
 	github.com/postfinance/vaultk8s v0.1.1
@@ -66,7 +66,6 @@ require (
 	github.com/pierrec/lz4 v2.6.1+incompatible // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
 	golang.org/x/net v0.7.0 // indirect
