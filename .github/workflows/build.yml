@@ -10,7 +10,7 @@ jobs:
       with:
         go-version: 'stable'
     - name: Install golangci-lint
-      uses: golangci/golangci-lint-action@master
+      uses: golangci/golangci-lint-action@v3.4.0
       with:
         version: v1.51.2
   test:
