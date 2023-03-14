@@ -1,6 +1,6 @@
 module github.com/postfinance/vault-kubernetes
 
-go 1.19
+go 1.20
 
 require (
 	github.com/hashicorp/vault/api v1.9.0
@@ -63,9 +63,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220223155221-ee480838109b // indirect
 	golang.org/x/sys v0.5.0 // indirect
