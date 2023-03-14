@@ -12,7 +12,7 @@ jobs:
     - name: Install golangci-lint
       uses: golangci/golangci-lint-action@master
       with:
-        version: v1.50.1
+        version: v1.51.2
   test:
     runs-on: ubuntu-latest
     steps:
