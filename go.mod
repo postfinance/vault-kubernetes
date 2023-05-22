@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/postfinance/vaultk8s v0.1.1
 	github.com/postfinance/vaultkv v0.0.5
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	k8s.io/api v0.26.2
 	k8s.io/apimachinery v0.26.2
 	k8s.io/client-go v0.26.2
