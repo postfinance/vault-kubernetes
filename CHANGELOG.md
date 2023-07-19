@@ -1,3 +1,53 @@
+## 0.3.3 (2023-07-19)
+
+
+### Build System
+
+* **deps**: bump github.com/stretchr/testify from 1.8.2 to 1.8.3 ([56790217](https://github.com/postfinance/vault-kubernetes/commit/56790217))
+  > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.2 to 1.8.3.
+  > - [Release notes](https://github.com/stretchr/testify/releases)
+  > - [Commits](https://github.com/stretchr/testify/compare/v1.8.2...v1.8.3)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: github.com/stretchr/testify
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-patch
+  > ...
+* **deps**: bump k8s.io/api from 0.26.2 to 0.27.2 ([9db77990](https://github.com/postfinance/vault-kubernetes/commit/9db77990))
+  > Bumps [k8s.io/api](https://github.com/kubernetes/api) from 0.26.2 to 0.27.2.
+  > - [Commits](https://github.com/kubernetes/api/compare/v0.26.2...v0.27.2)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/api
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-minor
+  > ...
+* **deps**: bump k8s.io/apimachinery from 0.26.2 to 0.27.2 ([6f82347a](https://github.com/postfinance/vault-kubernetes/commit/6f82347a))
+  > Bumps [k8s.io/apimachinery](https://github.com/kubernetes/apimachinery) from 0.26.2 to 0.27.2.
+  > - [Commits](https://github.com/kubernetes/apimachinery/compare/v0.26.2...v0.27.2)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/apimachinery
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-minor
+  > ...
+* **deps**: bump k8s.io/client-go from 0.26.2 to 0.27.2 ([0bef4de3](https://github.com/postfinance/vault-kubernetes/commit/0bef4de3))
+  > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.26.2 to 0.27.2.
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Commits](https://github.com/kubernetes/client-go/compare/v0.26.2...v0.27.2)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/client-go
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-minor
+  > ...
+
+
+
 ## 0.3.0 (2022-10-18)
 
 
