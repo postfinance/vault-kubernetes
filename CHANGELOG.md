@@ -1,3 +1,20 @@
+## 0.3.4 (2024-01-10)
+
+
+### Build System
+
+* **deps**: bump golang.org/x/net from 0.8.0 to 0.17.0 ([17304fae](https://github.com/postfinance/vault-kubernetes/commit/17304fae))
+  > Bumps [golang.org/x/net](https://github.com/golang/net) from 0.8.0 to 0.17.0.
+  > - [Commits](https://github.com/golang/net/compare/v0.8.0...v0.17.0)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: golang.org/x/net
+  >   dependency-type: indirect
+  > ...
+
+
+
 ## 0.3.3 (2023-07-19)
 
 
