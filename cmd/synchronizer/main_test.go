@@ -14,6 +14,7 @@ const (
 	trivialString = "h"
 )
 
+//nolint:goconst // test
 func TestDecode(t *testing.T) {
 	t.Run("not encoded", func(t *testing.T) {
 		res, err := decode(quote)
