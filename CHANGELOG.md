@@ -1,3 +1,58 @@
+## 0.3.5 (2024-04-02)
+
+
+### Bug Fixes
+
+* **common**: unit tests ([c7369121](https://github.com/postfinance/vault-kubernetes/commit/c7369121))
+
+
+### Build System
+
+* **deps**: bump github.com/stretchr/testify from 1.8.4 to 1.9.0 ([5bceab69](https://github.com/postfinance/vault-kubernetes/commit/5bceab69))
+  > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.4 to 1.9.0.
+  > - [Release notes](https://github.com/stretchr/testify/releases)
+  > - [Commits](https://github.com/stretchr/testify/compare/v1.8.4...v1.9.0)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: github.com/stretchr/testify
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-minor
+  > ...
+* **deps**: bump k8s.io/api from 0.29.0 to 0.29.3 ([c01c6096](https://github.com/postfinance/vault-kubernetes/commit/c01c6096))
+  > Bumps [k8s.io/api](https://github.com/kubernetes/api) from 0.29.0 to 0.29.3.
+  > - [Commits](https://github.com/kubernetes/api/compare/v0.29.0...v0.29.3)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/api
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-patch
+  > ...
+* **deps**: bump k8s.io/apimachinery from 0.29.0 to 0.29.3 ([cb7868ba](https://github.com/postfinance/vault-kubernetes/commit/cb7868ba))
+  > Bumps [k8s.io/apimachinery](https://github.com/kubernetes/apimachinery) from 0.29.0 to 0.29.3.
+  > - [Commits](https://github.com/kubernetes/apimachinery/compare/v0.29.0...v0.29.3)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/apimachinery
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-patch
+  > ...
+* **deps**: bump k8s.io/client-go from 0.29.0 to 0.29.3 ([7a1f6282](https://github.com/postfinance/vault-kubernetes/commit/7a1f6282))
+  > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.29.0 to 0.29.3.
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Commits](https://github.com/kubernetes/client-go/compare/v0.29.0...v0.29.3)
+  > 
+  > ---
+  > updated-dependencies:
+  > - dependency-name: k8s.io/client-go
+  >   dependency-type: direct:production
+  >   update-type: version-update:semver-patch
+  > ...
+
+
+
 ## 0.3.4 (2024-01-10)
 
 
