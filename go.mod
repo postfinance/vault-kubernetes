@@ -8,9 +8,9 @@ require (
 	github.com/postfinance/vaultk8s v0.1.1
 	github.com/postfinance/vaultkv v0.0.5
 	github.com/stretchr/testify v1.9.0
-	k8s.io/api v0.29.0
+	k8s.io/api v0.29.3
 	k8s.io/apimachinery v0.29.3
-	k8s.io/client-go v0.29.0
+	k8s.io/client-go v0.29.3
 )
 
 require (
