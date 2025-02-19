@@ -28,7 +28,8 @@ linters-settings:
   goimports:
     local-prefixes: github.com/ewohltman/ephemeral-roles
   govet:
-    check-shadowing: true
+    enable:
+      - shadowing
   misspell:
     locale: US
 
