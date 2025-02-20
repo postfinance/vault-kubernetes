@@ -41,7 +41,7 @@
   > ...
 * **deps**: bump k8s.io/client-go from 0.29.0 to 0.29.3 ([7a1f6282](https://github.com/postfinance/vault-kubernetes/commit/7a1f6282))
   > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.29.0 to 0.29.3.
-  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.29.0...v0.29.3)
   > 
   > ---
@@ -108,7 +108,7 @@
   > ...
 * **deps**: bump k8s.io/client-go from 0.26.2 to 0.27.2 ([0bef4de3](https://github.com/postfinance/vault-kubernetes/commit/0bef4de3))
   > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.26.2 to 0.27.2.
-  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.26.2...v0.27.2)
   > 
   > ---
@@ -150,7 +150,7 @@
 * **deps**: bump k8s.io/client-go from 0.23.4 to 0.23.5 ([daf9ad13](https://github.com/postfinance/vault-kubernetes/commit/daf9ad13))
   > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.23.4 to 0.23.5.
   > - [Release notes](https://github.com/kubernetes/client-go/releases)
-  > - [Changelog](https://github.com/kubernetes/client-go/blob/master/CHANGELOG.md)
+  > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.23.4...v0.23.5)
   > 
   > ---
