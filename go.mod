@@ -1,12 +1,12 @@
 module github.com/postfinance/vault-kubernetes
 
-go 1.23.3
+go 1.23.0
 
 toolchain go1.23.6
 
 require (
 	github.com/postfinance/vaultk8s v0.1.1
-	github.com/postfinance/vaultkv v0.0.5
+	github.com/postfinance/vaultkv v0.0.6
 	github.com/stretchr/testify v1.10.0
 	k8s.io/api v0.32.2
 	k8s.io/apimachinery v0.32.2
@@ -19,7 +19,6 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
-	github.com/docker/go-units v0.5.0 // indirect
 	github.com/emicklei/go-restful/v3 v3.12.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
