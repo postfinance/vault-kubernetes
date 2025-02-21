@@ -127,8 +127,8 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/postfinance/vaultk8s v0.1.1 h1:uZR93XezFWJsGfe2Hf6/ta6AUunw8YVsszlQdg0iTh0=
-github.com/postfinance/vaultk8s v0.1.1/go.mod h1:dP4BlQxh4Ss3f4/z3Hml92+1RwEM5NUSSZtUxJD1sTc=
+github.com/postfinance/vaultk8s v0.1.2 h1:lG2QeRZkYYkhXfXCCFCpBHNYsMsJ3nnTnZzTJKkf4BQ=
+github.com/postfinance/vaultk8s v0.1.2/go.mod h1:Vn13+7ta3fP3l4UQwQi2GhCGBc7gsL6CH7UrVS99ut4=
 github.com/postfinance/vaultkv v0.0.6 h1:PQ2OcvS4z40/8/FKlM7xVbt30gs1CMoe7b8OXnq4N0g=
 github.com/postfinance/vaultkv v0.0.6/go.mod h1:6rcaEvEe5hemIYWuz3WJId7ux8pIC5eerBtTQzVsJ/8=
 github.com/rogpeppe/go-internal v1.12.0 h1:exVL4IDcn6na9z1rAb56Vxr+CgyK3nn3O+epU5NdKM8=

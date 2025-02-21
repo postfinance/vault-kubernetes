@@ -3,7 +3,6 @@ run:
   tests: true
   timeout: 3m
 
-
 # all available settings of specific linters
 linters-settings:
   dupl:
