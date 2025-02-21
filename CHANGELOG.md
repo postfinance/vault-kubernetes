@@ -1,10 +1,37 @@
-## 0.3.5 (2024-04-02)
+# Changelog
 
+All notable changes to this project will be documented in this file.
+
+## [0.3.8] - 2025-02-21
+
+### 🐛 Bug Fixes
+
+- Fix tests
+- Fix linting
+
+### 💼 Other
+
+- *(deps)* Bump golang.org/x/crypto from 0.24.0 to 0.31.0
+- *(deps)* Bump github.com/stretchr/testify from 1.9.0 to 1.10.0
+- *(deps)* Bump golang.org/x/net from 0.26.0 to 0.33.0 (#156)
+- *(deps)* Bump k8s.io/api from 0.31.2 to 0.32.2
+- *(deps)* Bump k8s.io/client-go from 0.31.2 to 0.32.2
+- *(deps)* Bump google.golang.org/grpc from 1.43.0 to 1.56.3
+- Update all to recent versions
+
+### ⚙️ Miscellaneous Tasks
+
+- *(lint)* Fix linting config (#157)
+- Tidy
+- Rename default branch to main
+- Update to vaultkv 0.0.6
+- Update vaultk8s to latest release
+
+## 0.3.5 (2024-04-02)
 
 ### Bug Fixes
 
 * **common**: unit tests ([c7369121](https://github.com/postfinance/vault-kubernetes/commit/c7369121))
-
 
 ### Build System
 
@@ -12,7 +39,7 @@
   > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.4 to 1.9.0.
   > - [Release notes](https://github.com/stretchr/testify/releases)
   > - [Commits](https://github.com/stretchr/testify/compare/v1.8.4...v1.9.0)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: github.com/stretchr/testify
@@ -22,7 +49,7 @@
 * **deps**: bump k8s.io/api from 0.29.0 to 0.29.3 ([c01c6096](https://github.com/postfinance/vault-kubernetes/commit/c01c6096))
   > Bumps [k8s.io/api](https://github.com/kubernetes/api) from 0.29.0 to 0.29.3.
   > - [Commits](https://github.com/kubernetes/api/compare/v0.29.0...v0.29.3)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/api
@@ -32,7 +59,7 @@
 * **deps**: bump k8s.io/apimachinery from 0.29.0 to 0.29.3 ([cb7868ba](https://github.com/postfinance/vault-kubernetes/commit/cb7868ba))
   > Bumps [k8s.io/apimachinery](https://github.com/kubernetes/apimachinery) from 0.29.0 to 0.29.3.
   > - [Commits](https://github.com/kubernetes/apimachinery/compare/v0.29.0...v0.29.3)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/apimachinery
@@ -43,7 +70,7 @@
   > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.29.0 to 0.29.3.
   > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.29.0...v0.29.3)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/client-go
@@ -61,7 +88,7 @@
 * **deps**: bump golang.org/x/net from 0.8.0 to 0.17.0 ([17304fae](https://github.com/postfinance/vault-kubernetes/commit/17304fae))
   > Bumps [golang.org/x/net](https://github.com/golang/net) from 0.8.0 to 0.17.0.
   > - [Commits](https://github.com/golang/net/compare/v0.8.0...v0.17.0)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: golang.org/x/net
@@ -79,7 +106,7 @@
   > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.2 to 1.8.3.
   > - [Release notes](https://github.com/stretchr/testify/releases)
   > - [Commits](https://github.com/stretchr/testify/compare/v1.8.2...v1.8.3)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: github.com/stretchr/testify
@@ -89,7 +116,7 @@
 * **deps**: bump k8s.io/api from 0.26.2 to 0.27.2 ([9db77990](https://github.com/postfinance/vault-kubernetes/commit/9db77990))
   > Bumps [k8s.io/api](https://github.com/kubernetes/api) from 0.26.2 to 0.27.2.
   > - [Commits](https://github.com/kubernetes/api/compare/v0.26.2...v0.27.2)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/api
@@ -99,7 +126,7 @@
 * **deps**: bump k8s.io/apimachinery from 0.26.2 to 0.27.2 ([6f82347a](https://github.com/postfinance/vault-kubernetes/commit/6f82347a))
   > Bumps [k8s.io/apimachinery](https://github.com/kubernetes/apimachinery) from 0.26.2 to 0.27.2.
   > - [Commits](https://github.com/kubernetes/apimachinery/compare/v0.26.2...v0.27.2)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/apimachinery
@@ -110,7 +137,7 @@
   > Bumps [k8s.io/client-go](https://github.com/kubernetes/client-go) from 0.26.2 to 0.27.2.
   > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.26.2...v0.27.2)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/client-go
@@ -129,7 +156,7 @@
   > Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.7.0 to 1.7.1.
   > - [Release notes](https://github.com/stretchr/testify/releases)
   > - [Commits](https://github.com/stretchr/testify/compare/v1.7.0...v1.7.1)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: github.com/stretchr/testify
@@ -140,7 +167,7 @@
   > Bumps [k8s.io/api](https://github.com/kubernetes/api) from 0.23.4 to 0.23.5.
   > - [Release notes](https://github.com/kubernetes/api/releases)
   > - [Commits](https://github.com/kubernetes/api/compare/v0.23.4...v0.23.5)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/api
@@ -152,7 +179,7 @@
   > - [Release notes](https://github.com/kubernetes/client-go/releases)
   > - [Changelog](https://github.com/kubernetes/client-go/blob/main/CHANGELOG.md)
   > - [Commits](https://github.com/kubernetes/client-go/compare/v0.23.4...v0.23.5)
-  > 
+  >
   > ---
   > updated-dependencies:
   > - dependency-name: k8s.io/client-go
