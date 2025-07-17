@@ -125,8 +125,8 @@ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRI
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/postfinance/vaultk8s v0.1.3 h1:ygGMqeC3JhAQ6M8Yi+Pv6SWtA2u74eNQy6ZZOJ+rivU=
 github.com/postfinance/vaultk8s v0.1.3/go.mod h1:KX2y4a70iupyOl2Nh22CqsKJ6Km2iMjM68HB9M/g6EU=
-github.com/postfinance/vaultkv v0.0.6 h1:PQ2OcvS4z40/8/FKlM7xVbt30gs1CMoe7b8OXnq4N0g=
-github.com/postfinance/vaultkv v0.0.6/go.mod h1:6rcaEvEe5hemIYWuz3WJId7ux8pIC5eerBtTQzVsJ/8=
+github.com/postfinance/vaultkv v0.0.8 h1:ynYA3QnXkeYPrsJJIUkJQCWpFtGDqMw/HDiWCwuF4L4=
+github.com/postfinance/vaultkv v0.0.8/go.mod h1:ABW3NBU+LTY2+PTEa9Y1v+UEDVs6psLhbHPUXBod0uY=
 github.com/rogpeppe/go-internal v1.13.1 h1:KvO1DLK/DRN07sQ1LQKScxyZJuNnedQ5/wKSR38lUII=
 github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=
 github.com/ryanuber/go-glob v1.0.0 h1:iQh3xXAumdQ+4Ufa5b25cRpC5TYKlno6hsv6Cb3pkBk=
