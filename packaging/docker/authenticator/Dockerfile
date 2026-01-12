@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/static-debian11:latest as runtime
+FROM gcr.io/distroless/static-debian12:latest as runtime
 LABEL maintainer="OpenSource PF <opensource@postfinance.ch>"
 
 COPY authenticator /authenticator
