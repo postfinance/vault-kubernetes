@@ -1,6 +1,6 @@
 module github.com/postfinance/vault-kubernetes
 
-go 1.25.0
+go 1.25.5
 
 require (
 	github.com/postfinance/vaultk8s v0.1.5
