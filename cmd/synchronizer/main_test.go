@@ -52,8 +52,8 @@ func TestDecode(t *testing.T) {
 
 func TestSplitLabels(t *testing.T) {
 	labels := "s1=batman,s2,s3=superman,s4=,s5,"
-
 	exp := map[string]string{
+		//nolint:goconst //test readability
 		"s1": "batman",
 		"s3": "superman",
 		"s4": "", // guess who? the invisible man.
@@ -71,6 +71,7 @@ func TestSplitLabels(t *testing.T) {
 func TestMergeLabels(t *testing.T) {
 	existing := map[string]string{
 		"e1": "batman",
+		//nolint:goconst //test readability
 		"e2": "superman",
 	}
 
