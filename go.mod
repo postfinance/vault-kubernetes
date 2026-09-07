@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/postfinance/vaultk8s v0.1.6
-	github.com/postfinance/vaultkv v0.1.1
+	github.com/postfinance/vaultkv v0.1.2
 	github.com/stretchr/testify v1.11.1
 	k8s.io/api v0.37.0
 	k8s.io/apimachinery v0.37.0
@@ -43,7 +43,7 @@ require (
 	github.com/hashicorp/go-secure-stdlib/strutil v0.1.2 // indirect
 	github.com/hashicorp/go-sockaddr v1.0.7 // indirect
 	github.com/hashicorp/hcl v1.0.1-vault-7 // indirect
-	github.com/hashicorp/vault/api v1.22.0 // indirect
+	github.com/hashicorp/vault/api v1.23.0 // indirect
 	github.com/hashicorp/vault/api/auth/approle v0.11.0 // indirect
 	github.com/hashicorp/vault/api/auth/kubernetes v0.10.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
